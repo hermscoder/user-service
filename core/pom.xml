@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>presentation</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>core</artifactId>
 
     <dependencies>
         <dependency>
@@ -20,8 +19,27 @@
         </dependency>
         <dependency>
             <groupId>com.shareit</groupId>
+            <artifactId>data</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.shareit</groupId>
+            <artifactId>presentation</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.shareit</groupId>
             <artifactId>business</artifactId>
             <version>${parent.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

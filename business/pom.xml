@@ -9,18 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>presentation</artifactId>
+    <artifactId>business</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>com.shareit</groupId>
-            <artifactId>domain</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.shareit</groupId>
-            <artifactId>business</artifactId>
+            <artifactId>data</artifactId>
             <version>${parent.version}</version>
         </dependency>
     </dependencies>
