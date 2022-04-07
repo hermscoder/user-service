@@ -16,6 +16,9 @@ public class User {
 //    private Media profilePicture;
 //    private List<Interest> interests;
 
+    public User(String email, String password, String name, LocalDate birthDate) {
+        this(null,email, password, name, birthDate);
+    }
 
     public User(Long id, String email, String password, String name, LocalDate birthDate) {
         this.id = id;
