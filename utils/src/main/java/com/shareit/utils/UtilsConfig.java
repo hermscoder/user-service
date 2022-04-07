@@ -1,11 +1,11 @@
 package com.shareit.utils;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-@Configurable
+@Configuration
 public class UtilsConfig {
 
     @Bean
