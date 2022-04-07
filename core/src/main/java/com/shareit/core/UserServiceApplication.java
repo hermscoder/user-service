@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = {"com.shareit.data"})
 @EntityScan(basePackages = {"com.shareit.domain"})
-@ComponentScan(basePackages = {"com.shareit.data", "com.shareit.presentation", "com.shareit.service"})
+@ComponentScan(basePackages = {"com.shareit.data", "com.shareit.presentation", "com.shareit.service", "com.shareit.utils"})
 public class UserServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class);
