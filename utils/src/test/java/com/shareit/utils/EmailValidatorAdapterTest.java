@@ -1,7 +1,8 @@
 package com.shareit.utils;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class EmailValidatorAdapterTest {
 
@@ -10,9 +11,10 @@ class EmailValidatorAdapterTest {
     public EmailValidatorAdapterTest() {
         this.emailValidatorAdapter = new EmailValidatorAdapter();
     }
-
+    @Test
     public void testIsValid() {
         boolean emailValid = emailValidatorAdapter.isValid("any_email@mail.com");
-        assertTrue(emailValid);
+        assertFalse(emailValid);
     }
+
 }
