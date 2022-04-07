@@ -4,10 +4,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailValidatorAdapter implements EmailValidator {
+
+    private final org.apache.commons.validator.routines.EmailValidator emailValidator;
+
+    public EmailValidatorAdapter(org.apache.commons.validator.routines.EmailValidator emailValidator) {
+        this.emailValidator = emailValidator;
+    }
+
     @Override
     public boolean isValid(String email) {
-//        return org.apache.commons.validator.routines.EmailValidator.getInstance()
-//                .isValid(email);
-        return false;
+        return emailValidator.isValid(email);
     }
 }

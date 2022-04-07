@@ -12,4 +12,14 @@
     <artifactId>utils</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <validator.version>1.7</validator.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${validator.version}</version>
+        </dependency>
+    </dependencies>
 </project>
