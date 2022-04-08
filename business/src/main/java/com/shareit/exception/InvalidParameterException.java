@@ -4,7 +4,7 @@ public class InvalidParameterException extends RuntimeException {
     private String paramName;
 
     public InvalidParameterException(String paramName) {
-        super(String.format("Invalid param: $1", paramName));
+        super(String.format("Invalid param: %s", paramName));
         this.paramName = paramName;
     }
 
