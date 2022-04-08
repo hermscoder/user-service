@@ -4,11 +4,12 @@ import com.shareit.data.repository.UserRepository;
 import com.shareit.domain.User;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.exception.InvalidParameterException;
+import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
 import com.shareit.utils.EmailValidator;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -23,8 +24,12 @@ public class UserService {
         this.encrypter = encrypter;
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public User findById(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional.isEmpty()){
+            throw new UserNotFoundException(userId);
+        }
+        return userOptional.get();
     }
 
     public Long createUser(CreateUser createUser) {
