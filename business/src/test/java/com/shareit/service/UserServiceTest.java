@@ -4,6 +4,7 @@ import com.shareit.data.repository.UserRepository;
 import com.shareit.domain.User;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.exception.InvalidParameterException;
+import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
 import com.shareit.utils.EmailValidator;
 import org.junit.jupiter.api.Test;
@@ -13,10 +14,10 @@ import org.mockito.Mockito;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -51,14 +52,23 @@ class UserServiceTest {
     }
 
     @Test
-    public void testFindAll() {
-        when(userRepository.findAll()).thenReturn(users);
+    public void testFindById() {
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(users.get(0)));
 
-        List<User> allUsers = userService.findAll();
+        User user = userService.findById(1L);
 
-        assertNotNull(allUsers);
-        assertEquals(allUsers.size(), users.size());
-        assertEquals(allUsers.get(0), users.get(0));
+        assertNotNull(user);
+        assertEquals(users.get(0), user);
+    }
+
+    @Test
+    public void testFindByIdNotFound() {
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class, () -> userService.findById(1L));
+
+        assertEquals(1L, userNotFoundException.getUserId());
+        assertEquals("User not found: 1", userNotFoundException.getMessage());
     }
 
     @Test
@@ -76,6 +86,7 @@ class UserServiceTest {
 
         InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userService.createUser(createUser));
         assertEquals("passwordConfirmation", invalidParameterException.getParamName());
+        assertEquals("Invalid param: passwordConfirmation", invalidParameterException.getMessage());
     }
 
     @Test
@@ -90,7 +101,7 @@ class UserServiceTest {
     @Test
     public void testCreateUser() {
         when(emailValidator.isValid(anyString())).thenReturn(true);
-        when(encrypter.encrypt(anyString())).thenReturn("encrypted_password");
+        when(encrypter.encrypt(anyString())).thenReturn("HHV$%%^5478yhgvbtFv34#$b");
         when(userRepository.save(any(User.class))).thenReturn(users.get(0));
 
 
@@ -98,7 +109,7 @@ class UserServiceTest {
 
         verify(userRepository).save(
                 new User(createUser.getEmail(),
-                "encrypted_password",
+                "HHV$%%^5478yhgvbtFv34#$b",
                         createUser.getName(),
                         createUser.getBirthDate()));
         assertEquals(1L, userId);
