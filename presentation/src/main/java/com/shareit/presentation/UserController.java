@@ -5,12 +5,9 @@ import com.shareit.domain.User;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.UserCreated;
 import com.shareit.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 
 @RestController
@@ -22,13 +19,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public List<User> getUsers() {
-        return userService.findAll();
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable("id") Long userId) {
+        return userService.findById(userId);
     }
 
     @PostMapping
-    public UserCreated userRegister(CreateUser createUser) {
+    public UserCreated userRegister(@Valid @RequestBody CreateUser createUser) {
         return new UserCreated(userService.createUser(createUser));
     }
 }
