@@ -13,6 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 
@@ -31,13 +32,12 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetUsers() {
+    public void testGetUserById() {
 
-        when(userService.findAll()).thenReturn(userList);
-        List<User> users = userController.getUsers();
-        assertNotNull(users);
-        assertEquals(userList.size(), users.size());
-        assertEquals(userList.get(0), users.get(0));
+        when(userService.findById(anyLong())).thenReturn(userList.get(0));
+        User user = userController.getUserById(1L);
+        assertNotNull(user);
+        assertEquals(userList.get(0), user);
     }
 
     @Test
