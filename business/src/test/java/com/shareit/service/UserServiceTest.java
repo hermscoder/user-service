@@ -41,7 +41,7 @@ class UserServiceTest {
             "any_name",
             birthDate);
 
-    private User userModel = new User(1L,
+    private User userModelExpected = new User(1L,
             "any_email@mail.com",
             "any_password",
             "any_name",
@@ -62,7 +62,7 @@ class UserServiceTest {
         User user = userService.findById(1L);
 
         assertNotNull(user);
-        assertEquals(userModel, user);
+        assertEquals(userModelExpected, user);
     }
 
     @Test
