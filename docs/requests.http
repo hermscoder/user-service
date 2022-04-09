@@ -1,5 +1,19 @@
-GET http://localhost:8080/v1/user
+GET http://localhost:8080/v1/userEntity
 Accept: application/json
 
 ###
-GET http://localhost:8080/v1/user/1
+GET http://localhost:8080/v1/userEntity/1
+Accept: application/json
+
+###
+POST http://localhost:8080/v1/userEntity
+Content-Type: application/json
+
+
+{
+  "email": "invalid_email@@.com",
+  "password": "any_password",
+  "passwordConfirmation": "any_password",
+  "name": "any_name",
+  "birthDate": [2022,4,8]
+}
