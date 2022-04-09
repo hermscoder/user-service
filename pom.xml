@@ -32,6 +32,7 @@
         <java.version>11</java.version>
         <hibernate-validator-version>6.2.2.Final</hibernate-validator-version>
 <!--        <lombok-version>1.18.20</lombok-version>-->
+        <mapstruct-version>1.4.2.Final</mapstruct-version>
 
     </properties>
 
@@ -79,10 +80,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct-version}</version>
+        </dependency>
     </dependencies>
 
-<!--    <build>-->
-<!--        <plugins>-->
+    <build>
+        <plugins>
 <!--            <plugin>-->
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
 <!--                <artifactId>maven-compiler-plugin</artifactId>-->
@@ -99,6 +105,22 @@
 <!--                    </annotationProcessorPaths>-->
 <!--                </configuration>-->
 <!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>1.4.2.Final</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
