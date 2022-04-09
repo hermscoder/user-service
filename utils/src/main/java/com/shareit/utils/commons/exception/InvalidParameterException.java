@@ -1,4 +1,4 @@
-package com.shareit.exception;
+package com.shareit.utils.commons.exception;
 
 public class InvalidParameterException extends BadRequestException {
     private String paramName;
