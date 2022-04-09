@@ -22,6 +22,9 @@ public class CreateUser {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate birthDate;
 
+    public CreateUser() {
+    }
+
     public CreateUser(String email, String password, String passwordConfirmation, String name, LocalDate birthDate) {
         this.email = email;
         this.password = password;
