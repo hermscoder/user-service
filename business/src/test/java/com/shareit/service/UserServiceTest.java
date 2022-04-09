@@ -1,14 +1,14 @@
 package com.shareit.service;
 
 import com.shareit.data.repository.UserRepository;
-import com.shareit.domain.User;
+import com.shareit.domain.UserEntity;
 import com.shareit.domain.dto.CreateUser;
+import com.shareit.domain.dto.User;
 import com.shareit.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
 import com.shareit.utils.EmailValidator;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
@@ -29,19 +29,25 @@ class UserServiceTest {
     private final EmailValidator emailValidator;
     private final Encrypter encrypter;
 
+    private final LocalDate birthDate = LocalDate.now();
     private final CreateUser createUser = new CreateUser(
             "any_email@mail.com",
             "any_password",
             "any_password",
             "any_name",
-            LocalDate.now());
+            birthDate);
 
-    private List<User> users = Collections.singletonList(
-            new User(1L,
-                    "any_email@mail.com",
-                    "any_password",
-                    "any_name",
-                    LocalDate.now()));
+    private UserEntity userEntities = new UserEntity(1L,
+            "any_email@mail.com",
+            "any_password",
+            "any_name",
+            birthDate);
+
+    private User userModel = new User(1L,
+            "any_email@mail.com",
+            "any_password",
+            "any_name",
+            birthDate);
 
     public UserServiceTest() {
         userRepository = Mockito.mock(UserRepository.class);
@@ -53,12 +59,12 @@ class UserServiceTest {
 
     @Test
     public void testFindById() {
-        when(userRepository.findById(anyLong())).thenReturn(Optional.of(users.get(0)));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(userEntities));
 
         User user = userService.findById(1L);
 
         assertNotNull(user);
-        assertEquals(users.get(0), user);
+        assertEquals(userModel, user);
     }
 
     @Test
@@ -81,7 +87,7 @@ class UserServiceTest {
     @Test
     public void testCreateUserWithWrongPasswordConfirmation() {
         when(emailValidator.isValid(anyString())).thenReturn(true);
-        when(userRepository.save(any(User.class))).thenReturn(users.get(0));
+        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntities);
         createUser.setPasswordConfirmation("wrong_password");
 
         InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userService.createUser(createUser));
@@ -93,7 +99,7 @@ class UserServiceTest {
     public void testCreateUserWhenEncrypterThrowsException() {
         when(emailValidator.isValid(anyString())).thenReturn(true);
         when(encrypter.encrypt(anyString())).thenThrow(RuntimeException.class);
-        when(userRepository.save(any(User.class))).thenReturn(users.get(0));
+        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntities);
 
         assertThrows(Exception.class, () -> userService.createUser(createUser));
     }
@@ -102,13 +108,13 @@ class UserServiceTest {
     public void testCreateUser() {
         when(emailValidator.isValid(anyString())).thenReturn(true);
         when(encrypter.encrypt(anyString())).thenReturn("HHV$%%^5478yhgvbtFv34#$b");
-        when(userRepository.save(any(User.class))).thenReturn(users.get(0));
+        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntities);
 
 
         Long userId = userService.createUser(createUser);
 
         verify(userRepository).save(
-                new User(createUser.getEmail(),
+                new UserEntity(createUser.getEmail(),
                 "HHV$%%^5478yhgvbtFv34#$b",
                         createUser.getName(),
                         createUser.getBirthDate()));

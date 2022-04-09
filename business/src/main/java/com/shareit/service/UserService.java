@@ -1,8 +1,10 @@
 package com.shareit.service;
 
 import com.shareit.data.repository.UserRepository;
-import com.shareit.domain.User;
+import com.shareit.domain.UserEntity;
 import com.shareit.domain.dto.CreateUser;
+import com.shareit.domain.dto.User;
+import com.shareit.domain.mapper.UserMapper;
 import com.shareit.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
@@ -25,11 +27,12 @@ public class UserService {
     }
 
     public User findById(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<UserEntity> userOptional = userRepository.findById(userId);
         if(userOptional.isEmpty()){
             throw new UserNotFoundException(userId);
         }
-        return userOptional.get();
+        //Use mapstruct to map entity to dto User and return
+        return UserMapper.INSTANCE.toModel(userOptional.get());
     }
 
     public Long createUser(CreateUser createUser) {
@@ -41,11 +44,11 @@ public class UserService {
             throw new InvalidParameterException("passwordConfirmation");
         }
 
-        User user = userRepository.save(
-                new User(createUser.getEmail(),
+        UserEntity userEntity = userRepository.save(
+                new UserEntity(createUser.getEmail(),
                         encrypter.encrypt(createUser.getPassword()),
                         createUser.getName(),
                         createUser.getBirthDate()));
-        return user.getId();
+        return userEntity.getId();
     }
 }
