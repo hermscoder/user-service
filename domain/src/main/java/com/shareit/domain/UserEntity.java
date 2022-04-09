@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "s_user")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -17,11 +17,11 @@ public class User {
 //    private Media profilePicture;
 //    private List<Interest> interests;
 
-    public User(String email, String password, String name, LocalDate birthDate) {
+    public UserEntity(String email, String password, String name, LocalDate birthDate) {
         this(null,email, password, name, birthDate);
     }
 
-    public User(Long id, String email, String password, String name, LocalDate birthDate) {
+    public UserEntity(Long id, String email, String password, String name, LocalDate birthDate) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -29,7 +29,7 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    protected User() {
+    public UserEntity() {
 
     }
 
@@ -77,8 +77,8 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && Objects.equals(birthDate, user.birthDate);
+        UserEntity userEntity = (UserEntity) o;
+        return Objects.equals(id, userEntity.id) && Objects.equals(email, userEntity.email) && Objects.equals(password, userEntity.password) && Objects.equals(name, userEntity.name) && Objects.equals(birthDate, userEntity.birthDate);
     }
 
     @Override
