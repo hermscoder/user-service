@@ -7,13 +7,11 @@ import com.shareit.domain.dto.User;
 import com.shareit.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
-import com.shareit.utils.EmailValidator;
+import com.shareit.utils.validator.EmailValidator;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
