@@ -1,4 +1,4 @@
-package com.shareit.utils;
+package com.shareit.utils.validator;
 
 import org.springframework.stereotype.Service;
 

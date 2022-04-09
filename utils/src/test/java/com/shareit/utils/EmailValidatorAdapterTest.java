@@ -1,5 +1,6 @@
 package com.shareit.utils;
 
+import com.shareit.utils.validator.EmailValidatorAdapter;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
