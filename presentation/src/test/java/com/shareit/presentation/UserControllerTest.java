@@ -1,7 +1,7 @@
 package com.shareit.presentation;
 
-import com.shareit.domain.User;
 import com.shareit.domain.dto.CreateUser;
+import com.shareit.domain.dto.User;
 import com.shareit.domain.dto.UserCreated;
 import com.shareit.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -22,22 +22,21 @@ public class UserControllerTest {
     private final UserController userController;
     private final UserService userService;
 
-    private final List<User> userList;
+    private final User expectedUser;
 
     public UserControllerTest() {
         userService = Mockito.mock(UserService.class);
         userController = new UserController(userService);
-        User expected = new User(1L, "test@gmail.com", "password", "test", LocalDate.now());
-        userList = Collections.singletonList(expected);
+        expectedUser = new User(1L, "test@gmail.com", "password", "test", LocalDate.now());
     }
 
     @Test
     public void testGetUserById() {
 
-        when(userService.findById(anyLong())).thenReturn(userList.get(0));
-        User user = userController.getUserById(1L);
-        assertNotNull(user);
-        assertEquals(userList.get(0), user);
+        when(userService.findById(anyLong())).thenReturn(expectedUser);
+        User userById = userController.getUserById(1L);
+        assertNotNull(userById);
+        assertEquals(expectedUser, userById);
     }
 
     @Test
