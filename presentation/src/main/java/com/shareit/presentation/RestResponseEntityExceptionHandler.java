@@ -59,12 +59,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
             apiErrors.addError(new Error(fieldError.getCode(), String.format(fieldError.getDefaultMessage(),  fieldError.getField()), ""));
         }
 
-        return new ResponseEntity<>(apiErrors, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        Object bodyObj = apiErrors.getErrors().isEmpty() || apiErrors.getErrors().size() > 1 ? apiErrors : apiErrors.getErrors().get(0);
+        return new ResponseEntity<>(bodyObj, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = { BadRequestException.class })
     protected ResponseEntity<Object> handleConflict(BadRequestException ex, WebRequest request) {
-        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, new Error(ex.getClass().getSimpleName(), ex.getMessage(), ""), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
 
@@ -78,13 +79,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
 
     private Exception getExpectedCauseException(Exception exception, List<Class> expectedExceptionClasses) {
-        while(exception != null) {
-            if(expectedExceptionClasses.contains(exception.getClass())) {
-                return exception;
+        Exception expectedException = exception;
+        while(expectedException != null) {
+            if(expectedExceptionClasses.contains(expectedException.getClass())) {
+                return expectedException;
             }
-            exception = (Exception) exception.getCause();
+            expectedException = (Exception) expectedException.getCause();
         }
-        return exception;
+        return expectedException != null ? expectedException : exception;
     }
 
 }
