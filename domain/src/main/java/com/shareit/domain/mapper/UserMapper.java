@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface UserMapper {
-    static final UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+
     User toModel(UserEntity userEntity);
     UserEntity toEntity(User model);
 
