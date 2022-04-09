@@ -2,8 +2,8 @@ package com.shareit.domain.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.shareit.utils.deserializer.LocalDateDeserializer;
-import com.shareit.utils.serializer.LocalDateSerializer;
+import com.shareit.utils.commons.deserializer.LocalDateDeserializer;
+import com.shareit.utils.commons.serializer.LocalDateSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

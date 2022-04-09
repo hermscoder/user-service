@@ -1,4 +1,4 @@
-package com.shareit.utils.deserializer;
+package com.shareit.utils.commons.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
