@@ -8,7 +8,7 @@ import com.shareit.domain.mapper.UserMapper;
 import com.shareit.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
-import com.shareit.utils.EmailValidator;
+import com.shareit.utils.validator.EmailValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
