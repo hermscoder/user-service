@@ -4,7 +4,7 @@ import com.shareit.data.repository.UserRepository;
 import com.shareit.domain.UserEntity;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
-import com.shareit.exception.InvalidParameterException;
+import com.shareit.utils.commons.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
 import com.shareit.utils.validator.EmailValidator;
