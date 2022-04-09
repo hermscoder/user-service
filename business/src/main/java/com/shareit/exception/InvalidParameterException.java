@@ -1,6 +1,6 @@
 package com.shareit.exception;
 
-public class InvalidParameterException extends RuntimeException {
+public class InvalidParameterException extends BadRequestException {
     private String paramName;
 
     public InvalidParameterException(String paramName) {
