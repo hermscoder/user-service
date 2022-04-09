@@ -1,19 +1,20 @@
-GET http://localhost:8080/v1/userEntity
+GET http://localhost:8080/v1/user
 Accept: application/json
 
 ###
-GET http://localhost:8080/v1/userEntity/1
+GET http://localhost:8080/v1/user/1
 Accept: application/json
 
-###
-POST http://localhost:8080/v1/userEntity
+
+### POST User registation
+POST http://localhost:8080/v1/user
 Content-Type: application/json
-
 
 {
   "email": "invalid_email@@.com",
   "password": "any_password",
   "passwordConfirmation": "any_password",
-  "name": "any_name",
-  "birthDate": [2022,4,8]
+  "birthDate": "09-04-2022"
 }
+
+###
