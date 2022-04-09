@@ -35,12 +35,6 @@ class UserControllerWebTest {
     private static final String USER_ENDPOINT = "/v1/user";
 
     @Autowired
-    private WebApplicationContext context;
-
-    @Autowired
-    private Filter springSecurityFilterChain;
-
-    @Autowired
     private MockMvc mockMvc;
 
     private final  CreateUser createUser = new CreateUser(
