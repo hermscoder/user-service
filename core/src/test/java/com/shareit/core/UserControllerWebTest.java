@@ -12,13 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.Filter;
 import java.time.LocalDate;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -79,6 +74,25 @@ class UserControllerWebTest {
 
     @Test
     @Order(3)
+    public void testUserRegisterWithoutName() throws Exception {
+        CreateUser createUser = new CreateUser(
+                "invalid_email@.com",
+                "any_password",
+                "any_password",
+                null,
+                LocalDate.now());
+
+        mockMvc.perform(
+                post(USER_ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(createUser))
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Missing param: name"));
+    }
+
+    @Test
+    @Order(4)
     public void testGetUserById() throws Exception {
         mockMvc.perform(get(USER_ENDPOINT + "/1").with(csrf()))
                 .andExpect(status().isOk())
