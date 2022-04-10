@@ -32,12 +32,13 @@ class UserControllerWebTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private final LocalDate birthDate = LocalDate.now();
     private final  CreateUser createUser = new CreateUser(
             "any_email@mail.com",
             "any_password",
             "any_password",
             "any_name",
-            LocalDate.now());
+            birthDate);
 
     @Test
     @Order(1)
@@ -69,7 +70,7 @@ class UserControllerWebTest {
                         .content(asJsonString(createUser))
                         .with(csrf()))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$").value("Invalid param: email"));
+                .andExpect(jsonPath("$.message").value("Invalid param: email"));
     }
 
     @Test
@@ -97,7 +98,7 @@ class UserControllerWebTest {
         mockMvc.perform(get(USER_ENDPOINT + "/1").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("1"))
-                .andExpect(jsonPath("$.birthDate").value("2022-04-09"))
+                .andExpect(jsonPath("$.birthDate").value(birthDate.toString()))
                 .andExpect(jsonPath("$.email").value("any_email@mail.com"))
                 .andExpect(jsonPath("$.name").value("any_name"));
     }
