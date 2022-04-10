@@ -12,4 +12,11 @@
     <artifactId>infrastructure</artifactId>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.shareit</groupId>
+            <artifactId>utils</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
 </project>
