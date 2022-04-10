@@ -1,8 +1,7 @@
 package com.shareit.presentation;
 
-import com.shareit.data.repository.UserRepository;
-import com.shareit.domain.User;
 import com.shareit.domain.dto.CreateUser;
+import com.shareit.domain.dto.User;
 import com.shareit.domain.dto.UserCreated;
 import com.shareit.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +20,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable("id") Long userId) {
+        //TODO Return ResponseEntity or create a exception handler to handle different type of exceptions
         return userService.findById(userId);
     }
 
