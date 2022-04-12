@@ -43,6 +43,17 @@ public class UserControllerTest {
     }
 
     @Test
+    public void testGetUserByIdThrowUserNotFoundException() {
+        when(userService.findById(anyLong())).thenThrow(new UserNotFoundException(1L));
+
+        UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class, () -> userController.getUserById(1L));
+
+        assertNotNull(userNotFoundException);
+        assertEquals(1L, userNotFoundException.getUserId());
+        assertEquals("User not found: 1", userNotFoundException.getMessage());
+    }
+
+    @Test
     public void testUserRegister() {
         when(userService.createUser(any(CreateUser.class))).thenReturn(new UserCreated(1L));
 
@@ -67,6 +78,8 @@ public class UserControllerTest {
                         "wrong_password",
                         "any_name",
                         LocalDate.now())));
+
+        assertNotNull(invalidParameterException);
         assertEquals("passwordConfirmation", invalidParameterException.getParamName());
         assertEquals("Invalid param: passwordConfirmation", invalidParameterException.getMessage());
     }
