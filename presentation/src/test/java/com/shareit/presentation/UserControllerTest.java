@@ -3,6 +3,7 @@ package com.shareit.presentation;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.dto.UserCreated;
+import com.shareit.domain.entity.UserState;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.service.UserService;
 import com.shareit.utils.commons.exception.InvalidParameterException;
@@ -29,7 +30,7 @@ public class UserControllerTest {
     public UserControllerTest() {
         userService = Mockito.mock(UserService.class);
         userController = new UserController(userService);
-        expectedUser = new User(1L, "test@gmail.com", "password", "test", LocalDate.now());
+        expectedUser = new User(1L, "test@gmail.com", "password", "test", LocalDate.now(), true);
     }
 
     @Test

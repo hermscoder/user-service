@@ -2,6 +2,7 @@ package com.shareit.domain.mapper;
 
 import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.dto.User;
+import com.shareit.domain.entity.UserState;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
@@ -19,13 +20,15 @@ class UserMapperTest {
             "any_email@mail.com",
             "any_password",
             "any_name",
-            birthDate);
+            birthDate,
+            UserState.CONFIRMED);
 
     private final User userModel = new User(1L,
             "any_email@mail.com",
             "any_password",
             "any_name",
-            birthDate);
+            birthDate,
+            true);
 
     @Test
     public void testToModel() {

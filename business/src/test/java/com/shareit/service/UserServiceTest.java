@@ -5,6 +5,7 @@ import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.dto.UserCreated;
+import com.shareit.domain.entity.UserState;
 import com.shareit.utils.commons.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
@@ -40,13 +41,15 @@ class UserServiceTest {
             "any_email@mail.com",
             "any_password",
             "any_name",
-            birthDate);
+            birthDate,
+            UserState.CONFIRMED);
 
     private User userModelExpected = new User(1L,
             "any_email@mail.com",
             "any_password",
             "any_name",
-            birthDate);
+            birthDate,
+            true);
 
     public UserServiceTest() {
         userRepository = Mockito.mock(UserRepository.class);

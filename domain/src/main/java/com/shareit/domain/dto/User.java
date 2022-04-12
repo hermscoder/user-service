@@ -23,10 +23,11 @@ public class User {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate birthDate;
+    private Boolean confirmed;
 //    private Media profilePicture;
 //    private List<Interest> interests;
 
-    public User(String email, String password, String name, LocalDate birthDate) {
-        this(null,email, password, name, birthDate);
+    public User(String email, String password, String name, LocalDate birthDate, Boolean confirmed) {
+        this(null,email, password, name, birthDate, confirmed);
     }
 }
