@@ -3,7 +3,9 @@ package com.shareit.presentation;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.dto.UserCreated;
+import com.shareit.exception.UserNotFoundException;
 import com.shareit.service.UserService;
+import com.shareit.utils.commons.exception.InvalidParameterException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
@@ -54,4 +56,19 @@ public class UserControllerTest {
         assertEquals(HttpStatus.OK, userCreatedResponseEntity.getStatusCode());
         assertEquals(1L, userCreatedResponseEntity.getBody().getId());
     }
+
+    @Test
+    public void testUserRegisterThrowInvalidParameterException() {
+        when(userService.createUser(any(CreateUser.class))).thenThrow(new InvalidParameterException("passwordConfirmation"));
+
+        InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userController.userRegister(
+                new CreateUser("any_email@mail.com",
+                        "any_password",
+                        "wrong_password",
+                        "any_name",
+                        LocalDate.now())));
+        assertEquals("passwordConfirmation", invalidParameterException.getParamName());
+        assertEquals("Invalid param: passwordConfirmation", invalidParameterException.getMessage());
+    }
+
 }
