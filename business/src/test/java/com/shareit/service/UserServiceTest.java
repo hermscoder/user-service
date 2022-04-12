@@ -4,6 +4,7 @@ import com.shareit.data.repository.UserRepository;
 import com.shareit.domain.UserEntity;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
+import com.shareit.domain.dto.UserCreated;
 import com.shareit.utils.commons.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
@@ -109,14 +110,14 @@ class UserServiceTest {
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntities);
 
 
-        Long userId = userService.createUser(createUser);
+        UserCreated userCreated = userService.createUser(createUser);
 
         verify(userRepository).save(
                 new UserEntity(createUser.getEmail(),
                 "HHV$%%^5478yhgvbtFv34#$b",
                         createUser.getName(),
                         createUser.getBirthDate()));
-        assertEquals(1L, userId);
+        assertEquals(1L, userCreated.getId());
     }
 
 }

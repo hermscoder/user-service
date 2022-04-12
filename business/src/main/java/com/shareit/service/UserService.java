@@ -4,6 +4,7 @@ import com.shareit.data.repository.UserRepository;
 import com.shareit.domain.UserEntity;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
+import com.shareit.domain.dto.UserCreated;
 import com.shareit.domain.mapper.UserMapper;
 import com.shareit.utils.commons.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
@@ -35,7 +36,7 @@ public class UserService {
         return UserMapper.INSTANCE.toModel(userOptional.get());
     }
 
-    public Long createUser(CreateUser createUser) {
+    public UserCreated createUser(CreateUser createUser) {
         if(!emailValidator.isValid(createUser.getEmail())) {
             throw new InvalidParameterException("email");
         }
@@ -49,6 +50,6 @@ public class UserService {
                         encrypter.encrypt(createUser.getPassword()),
                         createUser.getName(),
                         createUser.getBirthDate()));
-        return userEntity.getId();
+        return new UserCreated(userEntity.getId());
     }
 }

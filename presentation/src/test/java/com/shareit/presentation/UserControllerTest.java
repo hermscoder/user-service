@@ -32,26 +32,26 @@ public class UserControllerTest {
 
     @Test
     public void testGetUserById() {
-
         when(userService.findById(anyLong())).thenReturn(expectedUser);
-        ResponseEntity<User> userById = userController.getUserById(1L);
-        assertNotNull(userById);
-        assertEquals(HttpStatus.OK, userById.getStatusCode());
-        assertEquals(expectedUser, userById.getBody());
+        ResponseEntity<User> userByIdResponseEntity = userController.getUserById(1L);
+        assertNotNull(userByIdResponseEntity);
+        assertEquals(HttpStatus.OK, userByIdResponseEntity.getStatusCode());
+        assertNotNull(userByIdResponseEntity.getBody());
+        assertEquals(expectedUser, userByIdResponseEntity.getBody());
     }
 
     @Test
     public void testUserRegister() {
-        when(userService.createUser(any(CreateUser.class))).thenReturn(1L);
+        when(userService.createUser(any(CreateUser.class))).thenReturn(new UserCreated(1L));
 
-        ResponseEntity<UserCreated> userCreated = userController.userRegister(
+        ResponseEntity<UserCreated> userCreatedResponseEntity = userController.userRegister(
                 new CreateUser("any_email@mail.com",
                         "any_password",
                         "any_password",
                         "any_name",
                         LocalDate.now()));
-        assertNotNull(userCreated);
-        assertEquals(HttpStatus.OK, userCreated.getStatusCode());
-        assertEquals(1L, userCreated.getBody().getId());
+        assertNotNull(userCreatedResponseEntity);
+        assertEquals(HttpStatus.OK, userCreatedResponseEntity.getStatusCode());
+        assertEquals(1L, userCreatedResponseEntity.getBody().getId());
     }
 }
