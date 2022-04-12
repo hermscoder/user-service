@@ -82,7 +82,7 @@ class UserServiceTest {
     @Test
     public void testCreateUserWhenInvalidEmailProvided() {
         when(emailValidator.isValid(anyString())).thenReturn(false);
-        InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userService.createUser(createUser));
+        InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userService.signUpUser(createUser));
         assertEquals("email", invalidParameterException.getParamName());
     }
 
@@ -92,7 +92,7 @@ class UserServiceTest {
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntities);
         createUser.setPasswordConfirmation("wrong_password");
 
-        InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userService.createUser(createUser));
+        InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userService.signUpUser(createUser));
         assertEquals("passwordConfirmation", invalidParameterException.getParamName());
         assertEquals("Invalid param: passwordConfirmation", invalidParameterException.getMessage());
     }
@@ -103,7 +103,7 @@ class UserServiceTest {
         when(encrypter.encrypt(anyString())).thenThrow(RuntimeException.class);
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntities);
 
-        assertThrows(Exception.class, () -> userService.createUser(createUser));
+        assertThrows(Exception.class, () -> userService.signUpUser(createUser));
     }
 
     @Test
@@ -113,7 +113,7 @@ class UserServiceTest {
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntities);
 
 
-        UserCreated userCreated = userService.createUser(createUser);
+        UserCreated userCreated = userService.signUpUser(createUser);
 
         verify(userRepository).save(
                 new UserEntity(createUser.getEmail(),

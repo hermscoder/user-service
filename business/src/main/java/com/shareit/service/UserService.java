@@ -36,7 +36,7 @@ public class UserService {
         return UserMapper.INSTANCE.toModel(userOptional.get());
     }
 
-    public UserCreated createUser(CreateUser createUser) {
+    public UserCreated signUpUser(CreateUser createUser) {
         if(!emailValidator.isValid(createUser.getEmail())) {
             throw new InvalidParameterException("email");
         }
@@ -50,6 +50,8 @@ public class UserService {
                         encrypter.encrypt(createUser.getPassword()),
                         createUser.getName(),
                         createUser.getBirthDate()));
+
+
         return new UserCreated(userEntity.getId());
     }
 }

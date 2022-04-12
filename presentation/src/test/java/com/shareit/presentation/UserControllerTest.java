@@ -3,7 +3,6 @@ package com.shareit.presentation;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.dto.UserCreated;
-import com.shareit.domain.entity.UserState;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.service.UserService;
 import com.shareit.utils.commons.exception.InvalidParameterException;
@@ -56,7 +55,7 @@ public class UserControllerTest {
 
     @Test
     public void testUserRegister() {
-        when(userService.createUser(any(CreateUser.class))).thenReturn(new UserCreated(1L));
+        when(userService.signUpUser(any(CreateUser.class))).thenReturn(new UserCreated(1L));
 
         ResponseEntity<UserCreated> userCreatedResponseEntity = userController.userRegister(
                 new CreateUser("any_email@mail.com",
@@ -71,7 +70,7 @@ public class UserControllerTest {
 
     @Test
     public void testUserRegisterThrowInvalidParameterException() {
-        when(userService.createUser(any(CreateUser.class))).thenThrow(new InvalidParameterException("passwordConfirmation"));
+        when(userService.signUpUser(any(CreateUser.class))).thenThrow(new InvalidParameterException("passwordConfirmation"));
 
         InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userController.userRegister(
                 new CreateUser("any_email@mail.com",
