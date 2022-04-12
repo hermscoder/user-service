@@ -1,7 +1,7 @@
 package com.shareit.service;
 
 import com.shareit.data.repository.UserRepository;
-import com.shareit.domain.UserEntity;
+import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.dto.UserCreated;

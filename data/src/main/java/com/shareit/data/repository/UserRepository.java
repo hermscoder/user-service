@@ -1,6 +1,6 @@
 package com.shareit.data.repository;
 
-import com.shareit.domain.UserEntity;
+import com.shareit.domain.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

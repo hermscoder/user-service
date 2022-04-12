@@ -1,4 +1,4 @@
-package com.shareit.domain;
+package com.shareit.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,11 +20,13 @@ public class UserEntity {
     private String password;
     private String name;
     private LocalDate birthDate;
+    @Enumerated(EnumType.STRING)
+    private UserState state;
 //    private Media profilePicture;
 //    private List<Interest> interests;
 
     public UserEntity(String email, String password, String name, LocalDate birthDate) {
-        this(null,email, password, name, birthDate);
+        this(null,email, password, name, birthDate, UserState.CREATED);
     }
 
 }

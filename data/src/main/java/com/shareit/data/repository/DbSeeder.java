@@ -1,6 +1,6 @@
 package com.shareit.data.repository;
 
-import com.shareit.domain.UserEntity;
+import com.shareit.domain.entity.UserEntity;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;

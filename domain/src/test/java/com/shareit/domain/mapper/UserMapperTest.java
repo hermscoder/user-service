@@ -1,6 +1,6 @@
 package com.shareit.domain.mapper;
 
-import com.shareit.domain.UserEntity;
+import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.dto.User;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
