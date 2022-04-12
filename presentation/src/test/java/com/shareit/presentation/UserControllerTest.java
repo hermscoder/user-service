@@ -6,6 +6,8 @@ import com.shareit.domain.dto.UserCreated;
 import com.shareit.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 
@@ -32,22 +34,24 @@ public class UserControllerTest {
     public void testGetUserById() {
 
         when(userService.findById(anyLong())).thenReturn(expectedUser);
-        User userById = userController.getUserById(1L);
+        ResponseEntity<User> userById = userController.getUserById(1L);
         assertNotNull(userById);
-        assertEquals(expectedUser, userById);
+        assertEquals(HttpStatus.OK, userById.getStatusCode());
+        assertEquals(expectedUser, userById.getBody());
     }
 
     @Test
     public void testUserRegister() {
         when(userService.createUser(any(CreateUser.class))).thenReturn(1L);
 
-        UserCreated userCreated = userController.userRegister(
+        ResponseEntity<UserCreated> userCreated = userController.userRegister(
                 new CreateUser("any_email@mail.com",
                         "any_password",
                         "any_password",
                         "any_name",
                         LocalDate.now()));
         assertNotNull(userCreated);
-        assertEquals(1L, userCreated.getId());
+        assertEquals(HttpStatus.OK, userCreated.getStatusCode());
+        assertEquals(1L, userCreated.getBody().getId());
     }
 }
