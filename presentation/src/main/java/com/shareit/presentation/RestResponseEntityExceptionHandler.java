@@ -25,26 +25,6 @@ import java.util.List;
 @EnableWebMvc
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    /**TODO Create ApiError where we can have a single error or multiple errors like the following examples:
-     * {
-     *     "error": "auth-0001",
-     *     "message": "Incorrect username and password",
-     *     "detail": "Ensure that the username and password included in the request are correct",
-     *     "help": "https://example.com/help/error/auth-0001"
-     * }
-     *
-     * {
-     *     "errors": [
-     *         {
-     *             "error": "auth-0001",
-     *             "message": "Incorrect username and password",
-     *             "detail": "Ensure that the username and password included in the request are correct",
-     *             "help": "https://example.com/help/error/auth-0001"
-     *         },
-     *         ...
-     *     ]
-     * }
-     */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         ApiErrors apiErrors = new ApiErrors();
