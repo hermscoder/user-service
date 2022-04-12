@@ -21,7 +21,6 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") Long userId) {
-        //TODO Return ResponseEntity or create a exception handler to handle different type of exceptions
         return ResponseEntity.ok(userService.findById(userId));
     }
 
