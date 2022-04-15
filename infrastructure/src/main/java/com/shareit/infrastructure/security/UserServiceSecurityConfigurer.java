@@ -14,10 +14,12 @@ public class UserServiceSecurityConfigurer extends SecurityConfigurer {
             "/healthcheck",
             "/h2/**",
             "/auth/forgot/**",
-            "/v1/user/**"
+            "/v1/user/**",
+            "/v1/registration/**",
     };
 
     private static  final String [] PUBLIC_MATCHERS_GET = {
+            "/v1/registration/**",
             "/property/**"
     };
     private static  final String [] PUBLIC_MATCHERS_POST = {
