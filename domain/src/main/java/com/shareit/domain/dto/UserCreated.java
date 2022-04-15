@@ -1,13 +1,13 @@
 package com.shareit.domain.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserCreated {
     private Long id;
-
-    public UserCreated(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
+    private String token;
 }

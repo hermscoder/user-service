@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -55,7 +56,7 @@ public class UserControllerTest {
 
     @Test
     public void testUserRegister() {
-        when(userService.signUpUser(any(CreateUser.class))).thenReturn(new UserCreated(1L));
+        when(userService.signUpUser(any(CreateUser.class))).thenReturn(new UserCreated(1L, UUID.randomUUID().toString()));
 
         ResponseEntity<UserCreated> userCreatedResponseEntity = userController.userRegister(
                 new CreateUser("any_email@mail.com",
