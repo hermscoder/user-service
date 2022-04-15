@@ -5,7 +5,9 @@ import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.dto.UserCreated;
+import com.shareit.domain.entity.UserState;
 import com.shareit.domain.mapper.UserMapper;
+import com.shareit.service.registration.ConfirmationTokenService;
 import com.shareit.utils.commons.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
@@ -20,11 +22,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final EmailValidator emailValidator;
     private final Encrypter encrypter;
+    private final ConfirmationTokenService confirmationTokenService;
 
-    public UserService(UserRepository userRepository, EmailValidator emailValidator, Encrypter encrypter) {
+    public UserService(UserRepository userRepository, EmailValidator emailValidator, Encrypter encrypter, ConfirmationTokenService confirmationTokenService) {
         this.userRepository = userRepository;
         this.emailValidator = emailValidator;
         this.encrypter = encrypter;
+        this.confirmationTokenService = confirmationTokenService;
     }
 
     public User findById(Long userId) {
@@ -51,7 +55,12 @@ public class UserService {
                         createUser.getName(),
                         createUser.getBirthDate()));
 
+        String token = confirmationTokenService.createToken(userEntity);
+        //TODO send email to the user to confirm the account
+        return new UserCreated(userEntity.getId(), token);
+    }
 
-        return new UserCreated(userEntity.getId());
+    public int enableAppUser(String email) {
+        return userRepository.changeUserState(UserState.CONFIRMED, email);
     }
 }
