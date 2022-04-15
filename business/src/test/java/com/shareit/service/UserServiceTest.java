@@ -6,6 +6,7 @@ import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.dto.UserCreated;
 import com.shareit.domain.entity.UserState;
+import com.shareit.service.registration.ConfirmationTokenService;
 import com.shareit.utils.commons.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
@@ -28,6 +29,7 @@ class UserServiceTest {
     private final UserRepository userRepository;
     private final EmailValidator emailValidator;
     private final Encrypter encrypter;
+    private final ConfirmationTokenService confirmationTokenService;
 
     private final LocalDate birthDate = LocalDate.now();
     private final CreateUser createUser = new CreateUser(
@@ -36,6 +38,7 @@ class UserServiceTest {
             "any_password",
             "any_name",
             birthDate);
+
 
     private UserEntity userEntities = new UserEntity(1L,
             "any_email@mail.com",
@@ -55,8 +58,9 @@ class UserServiceTest {
         userRepository = Mockito.mock(UserRepository.class);
         emailValidator = Mockito.mock(EmailValidator.class);
         encrypter = Mockito.mock(Encrypter.class);
+        confirmationTokenService = Mockito.mock(ConfirmationTokenService.class);
 
-        this.userService = new UserService(userRepository, emailValidator, encrypter);
+        this.userService = new UserService(userRepository, emailValidator, encrypter, confirmationTokenService);
     }
 
     @Test
