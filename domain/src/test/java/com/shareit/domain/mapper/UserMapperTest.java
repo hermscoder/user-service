@@ -37,10 +37,4 @@ class UserMapperTest {
         assertEquals(userModel, model);
     }
 
-    @Test
-    public void testToEntity() {
-        UserEntity entity = userMapper.toEntity(userModel);
-        assertNotNull(userEntity);
-        assertEquals(userEntity, entity);
-    }
 }
