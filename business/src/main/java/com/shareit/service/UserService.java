@@ -36,7 +36,6 @@ public class UserService {
         if(userOptional.isEmpty()){
             throw new UserNotFoundException(userId);
         }
-        //Use mapstruct to map entity to dto User and return
         return UserMapper.INSTANCE.toModel(userOptional.get());
     }
 
