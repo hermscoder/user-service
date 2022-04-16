@@ -55,10 +55,12 @@ public class UserService {
                         createUser.getName(),
                         createUser.getBirthDate()));
 
-        String token = confirmationTokenService.createToken(userEntity);
         //TODO send email to the user to confirm the account
-        return new UserCreated(userEntity.getId(), token);
+        confirmationTokenService.createAndsendEmailConfirmationTokenEmailToUser(userEntity);
+        return new UserCreated(userEntity.getId(), "");
     }
+
+
 
     public int enableAppUser(String email) {
         return userRepository.changeUserState(UserState.CONFIRMED, email);

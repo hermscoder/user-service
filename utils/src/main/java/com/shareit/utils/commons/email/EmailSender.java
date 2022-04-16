@@ -1,5 +1,7 @@
 package com.shareit.utils.commons.email;
 
+import java.util.HashMap;
+
 public interface EmailSender {
-    void send(String to, String email);
+    void send(MailDetail request, HashMap<String, Object> model);
 }
