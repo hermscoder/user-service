@@ -24,7 +24,6 @@ public class ConfirmationTokenService {
 
     public void saveConfirmationToken(ConfirmationToken token) {
         confirmationTokenRepository.save(token);
-        //TODO send email confirmation
     }
 
     public Optional<ConfirmationToken> getConfirmationTokenByToken(String token) {

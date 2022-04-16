@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/v1/registration")
-public class AuthController {
+public class RegistrationController {
 
     //TODO Add tests
     private final AuthService authService;
 
-    public AuthController(AuthService authService) {
+    public RegistrationController(AuthService authService) {
         this.authService = authService;
     }
 
