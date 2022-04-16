@@ -1,5 +1,6 @@
-package com.shareit.utils.commons.email;
+package com.shareit.service.mail;
 
+import com.shareit.utils.commons.email.EmailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;

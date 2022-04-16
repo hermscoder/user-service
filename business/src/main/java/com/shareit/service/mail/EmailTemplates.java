@@ -1,4 +1,4 @@
-package com.shareit.utils.email;
+package com.shareit.service.mail;
 
 import java.util.Map;
 
