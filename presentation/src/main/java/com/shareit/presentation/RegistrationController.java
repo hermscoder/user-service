@@ -1,6 +1,6 @@
 package com.shareit.presentation;
 
-import com.shareit.domain.dto.CreateUser;
+import com.shareit.domain.dto.UserRegistration;
 import com.shareit.domain.dto.UserCreated;
 import com.shareit.service.registration.RegistrationService;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,8 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public ResponseEntity<UserCreated> userRegistration(@Valid @RequestBody CreateUser createUser) {
-        return ResponseEntity.ok(registrationService.registerUser(createUser));
+    public ResponseEntity<UserCreated> userRegistration(@Valid @RequestBody UserRegistration userRegistration) {
+        return ResponseEntity.ok(registrationService.registerUser(userRegistration));
     }
 
     @GetMapping(path = "confirm")

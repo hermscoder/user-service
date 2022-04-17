@@ -1,6 +1,6 @@
 package com.shareit.service.registration;
 
-import com.shareit.domain.dto.CreateUser;
+import com.shareit.domain.dto.UserRegistration;
 import com.shareit.domain.dto.UserCreated;
 import com.shareit.domain.dto.registration.ConfirmationToken;
 import com.shareit.domain.entity.UserEntity;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RegistrationService {
-    //TODO add tests
+
     private final ConfirmationTokenService confirmationTokenService;
     private final UserService userService;
 
@@ -20,8 +20,8 @@ public class RegistrationService {
         this.userService = userService;
     }
 
-    public UserCreated registerUser(CreateUser createUser) {
-        UserEntity userEntity = userService.signUpUser(createUser);
+    public UserCreated registerUser(UserRegistration userRegistration) {
+        UserEntity userEntity = userService.signUpUser(userRegistration);
 
         confirmationTokenService.createAndsendEmailConfirmationTokenEmailToUser(userEntity);
         return new UserCreated(userEntity.getId(), "");

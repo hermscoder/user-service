@@ -2,9 +2,8 @@ package com.shareit.service;
 
 import com.shareit.data.repository.UserRepository;
 import com.shareit.domain.entity.UserEntity;
-import com.shareit.domain.dto.CreateUser;
+import com.shareit.domain.dto.UserRegistration;
 import com.shareit.domain.dto.User;
-import com.shareit.domain.dto.UserCreated;
 import com.shareit.domain.entity.UserState;
 import com.shareit.domain.mapper.UserMapper;
 import com.shareit.service.registration.ConfirmationTokenService;
@@ -39,20 +38,20 @@ public class UserService {
         return UserMapper.INSTANCE.toModel(userOptional.get());
     }
 
-    public UserEntity signUpUser(CreateUser createUser) {
-        if(!emailValidator.isValid(createUser.getEmail())) {
+    public UserEntity signUpUser(UserRegistration userRegistration) {
+        if(!emailValidator.isValid(userRegistration.getEmail())) {
             throw new InvalidParameterException("email");
         }
 
-        if(!createUser.getPassword().equals(createUser.getPasswordConfirmation())) {
+        if(!userRegistration.getPassword().equals(userRegistration.getPasswordConfirmation())) {
             throw new InvalidParameterException("passwordConfirmation");
         }
 
         UserEntity userEntity = userRepository.save(
-                new UserEntity(createUser.getEmail(),
-                        encrypter.encrypt(createUser.getPassword()),
-                        createUser.getName(),
-                        createUser.getBirthDate()));
+                new UserEntity(userRegistration.getEmail(),
+                        encrypter.encrypt(userRegistration.getPassword()),
+                        userRegistration.getName(),
+                        userRegistration.getBirthDate()));
         return userEntity;
     }
 

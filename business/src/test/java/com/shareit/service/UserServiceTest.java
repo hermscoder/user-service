@@ -2,7 +2,7 @@ package com.shareit.service;
 
 import com.shareit.data.repository.UserRepository;
 import com.shareit.domain.entity.UserEntity;
-import com.shareit.domain.dto.CreateUser;
+import com.shareit.domain.dto.UserRegistration;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.entity.UserState;
 import com.shareit.service.registration.ConfirmationTokenService;
@@ -31,7 +31,7 @@ class UserServiceTest {
     private final ConfirmationTokenService confirmationTokenService;
 
     private final LocalDate birthDate = LocalDate.now();
-    private final CreateUser createUser = new CreateUser(
+    private final UserRegistration userRegistration = new UserRegistration(
             "any_email@mail.com",
             "any_password",
             "any_password",
@@ -85,7 +85,7 @@ class UserServiceTest {
     @Test
     public void testCreateUserWhenInvalidEmailProvided() {
         when(emailValidator.isValid(anyString())).thenReturn(false);
-        InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userService.signUpUser(createUser));
+        InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userService.signUpUser(userRegistration));
         assertEquals("email", invalidParameterException.getParamName());
     }
 
@@ -93,9 +93,9 @@ class UserServiceTest {
     public void testCreateUserWithWrongPasswordConfirmation() {
         when(emailValidator.isValid(anyString())).thenReturn(true);
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
-        createUser.setPasswordConfirmation("wrong_password");
+        userRegistration.setPasswordConfirmation("wrong_password");
 
-        InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userService.signUpUser(createUser));
+        InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userService.signUpUser(userRegistration));
         assertEquals("passwordConfirmation", invalidParameterException.getParamName());
         assertEquals("Invalid param: passwordConfirmation", invalidParameterException.getMessage());
     }
@@ -106,7 +106,7 @@ class UserServiceTest {
         when(encrypter.encrypt(anyString())).thenThrow(RuntimeException.class);
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
 
-        assertThrows(Exception.class, () -> userService.signUpUser(createUser));
+        assertThrows(Exception.class, () -> userService.signUpUser(userRegistration));
     }
 
     @Test
@@ -116,13 +116,13 @@ class UserServiceTest {
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
 
 
-        UserEntity userCreated = userService.signUpUser(createUser);
+        UserEntity userCreated = userService.signUpUser(userRegistration);
 
         verify(userRepository).save(
-                new UserEntity(createUser.getEmail(),
+                new UserEntity(userRegistration.getEmail(),
                 "HHV$%%^5478yhgvbtFv34#$b",
-                        createUser.getName(),
-                        createUser.getBirthDate()));
+                        userRegistration.getName(),
+                        userRegistration.getBirthDate()));
         assertNotNull(userCreated);
         assertEquals(userEntity, userCreated);
     }

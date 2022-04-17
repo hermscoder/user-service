@@ -1,7 +1,7 @@
 package com.shareit.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shareit.domain.dto.CreateUser;
+import com.shareit.domain.dto.UserRegistration;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -33,7 +32,7 @@ class UserControllerWebTest {
     private MockMvc mockMvc;
 
     private final LocalDate birthDate = LocalDate.now();
-    private final  CreateUser createUser = new CreateUser(
+    private final UserRegistration userRegistration = new UserRegistration(
             "any_email@mail.com",
             "any_password",
             "any_password",
@@ -47,7 +46,7 @@ class UserControllerWebTest {
         mockMvc.perform(
                 post(USER_ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(createUser))
+                        .content(asJsonString(userRegistration))
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
@@ -57,7 +56,7 @@ class UserControllerWebTest {
     @Test
     @Order(2)
     public void testUserRegisterEmailNotValid() throws Exception {
-        CreateUser createUser = new CreateUser(
+        UserRegistration userRegistration = new UserRegistration(
                 "invalid_email@@.com",
                 "any_password",
                 "any_password",
@@ -67,7 +66,7 @@ class UserControllerWebTest {
         mockMvc.perform(
                 post(USER_ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(createUser))
+                        .content(asJsonString(userRegistration))
                         .with(csrf()))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Invalid param: email"));
@@ -76,7 +75,7 @@ class UserControllerWebTest {
     @Test
     @Order(3)
     public void testUserRegisterWithoutName() throws Exception {
-        CreateUser createUser = new CreateUser(
+        UserRegistration userRegistration = new UserRegistration(
                 "invalid_email@.com",
                 "any_password",
                 "any_password",
@@ -86,7 +85,7 @@ class UserControllerWebTest {
         mockMvc.perform(
                 post(USER_ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(createUser))
+                        .content(asJsonString(userRegistration))
                         .with(csrf()))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Missing param: name"));

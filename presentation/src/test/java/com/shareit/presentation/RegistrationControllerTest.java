@@ -1,6 +1,6 @@
 package com.shareit.presentation;
 
-import com.shareit.domain.dto.CreateUser;
+import com.shareit.domain.dto.UserRegistration;
 import com.shareit.domain.dto.UserCreated;
 import com.shareit.service.registration.RegistrationService;
 import com.shareit.utils.commons.exception.BadRequestException;
@@ -29,10 +29,10 @@ class RegistrationControllerTest {
 
     @Test
     public void testUserRegister() {
-        when(registrationService.registerUser(any(CreateUser.class))).thenReturn(new UserCreated(1L, UUID.randomUUID().toString()));
+        when(registrationService.registerUser(any(UserRegistration.class))).thenReturn(new UserCreated(1L, UUID.randomUUID().toString()));
 
         ResponseEntity<UserCreated> userCreatedResponseEntity = registrationController.userRegistration(
-                new CreateUser("any_email@mail.com",
+                new UserRegistration("any_email@mail.com",
                         "any_password",
                         "any_password",
                         "any_name",
@@ -44,10 +44,10 @@ class RegistrationControllerTest {
 
     @Test
     public void testUserRegisterThrowInvalidParameterException() {
-        when(registrationService.registerUser(any(CreateUser.class))).thenThrow(new InvalidParameterException("passwordConfirmation"));
+        when(registrationService.registerUser(any(UserRegistration.class))).thenThrow(new InvalidParameterException("passwordConfirmation"));
 
         InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> registrationController.userRegistration(
-                new CreateUser("any_email@mail.com",
+                new UserRegistration("any_email@mail.com",
                         "any_password",
                         "wrong_password",
                         "any_name",

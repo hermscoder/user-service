@@ -9,7 +9,7 @@ import com.shareit.utils.commons.serializer.LocalDateSerializer;
 import java.time.LocalDate;
 
 
-public class CreateUser {
+public class UserRegistration {
     @NotEmpty
     private String email;
     @NotEmpty
@@ -22,10 +22,10 @@ public class CreateUser {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate birthDate;
 
-    public CreateUser() {
+    public UserRegistration() {
     }
 
-    public CreateUser(String email, String password, String passwordConfirmation, String name, LocalDate birthDate) {
+    public UserRegistration(String email, String password, String passwordConfirmation, String name, LocalDate birthDate) {
         this.email = email;
         this.password = password;
         this.passwordConfirmation = passwordConfirmation;

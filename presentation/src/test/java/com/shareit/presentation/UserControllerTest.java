@@ -1,18 +1,14 @@
 package com.shareit.presentation;
 
-import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
-import com.shareit.domain.dto.UserCreated;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.service.UserService;
-import com.shareit.utils.commons.exception.InvalidParameterException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
