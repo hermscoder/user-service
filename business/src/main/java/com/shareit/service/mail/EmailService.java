@@ -3,6 +3,7 @@ package com.shareit.service.mail;
 import com.shareit.utils.commons.email.EmailDataModel;
 import com.shareit.utils.commons.email.EmailSender;
 import com.shareit.utils.commons.email.MailDetail;
+import com.shareit.utils.commons.exception.EmailSenderException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -51,7 +52,7 @@ public class EmailService implements EmailSender {
             mailSender.send(message);
         } catch (MessagingException | IOException | TemplateException e) {
             LOGGER.error("failed to send email", e);
-            throw new IllegalStateException("failed to send email");
+            throw new EmailSenderException("failed to send email");
         }
     }
 }
