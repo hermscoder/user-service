@@ -1,6 +1,7 @@
 package com.shareit.domain.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,5 +10,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserCreated {
     private Long id;
-    private String token;
 }

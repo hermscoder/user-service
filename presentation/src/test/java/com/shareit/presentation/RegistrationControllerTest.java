@@ -29,7 +29,7 @@ class RegistrationControllerTest {
 
     @Test
     public void testUserRegister() {
-        when(registrationService.registerUser(any(UserRegistration.class))).thenReturn(new UserCreated(1L, UUID.randomUUID().toString()));
+        when(registrationService.registerUser(any(UserRegistration.class))).thenReturn(new UserCreated(1L));
 
         ResponseEntity<UserCreated> userCreatedResponseEntity = registrationController.userRegistration(
                 new UserRegistration("any_email@mail.com",
