@@ -67,7 +67,7 @@ public class ConfirmationTokenService {
                 .whenCompleteAsync((res, ex) -> {
                     if (ex != null) {
                         LOGGER.error(ex.getMessage(), ex);
-                        //TODO add to Queue to try again later.
+                        //TODO add logic to email send retry
                     }
                 });
     }
