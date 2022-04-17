@@ -1,20 +1,22 @@
-GET http://localhost:8080/v1/user
-Accept: application/json
-
-###
-GET http://localhost:8080/v1/user/1
+### GET User details
+GET http://localhost:8080/v1/user/{userId}
 Accept: application/json
 
 
 ### POST User registation
-POST http://localhost:8080/v1/user
+POST http://localhost:8080/v1/registration
 Content-Type: application/json
 
 {
-  "email": "invalid_email@@.com",
+  "email": "emersonrjr03@gmail.com",
   "password": "any_password",
   "passwordConfirmation": "any_password",
-  "birthDate": "09-04-2022"
+  "name": "any_name",
+  "birthDate": "2022-04-09"
 }
+
+### GET Token Confirmation
+POST http://localhost:8080/v1/registration/confirm?token={token}
+Content-Type: application/json
 
 ###
