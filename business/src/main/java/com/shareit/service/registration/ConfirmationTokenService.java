@@ -1,7 +1,7 @@
 package com.shareit.service.registration;
 
 import com.shareit.data.repository.registration.ConfirmationTokenRepository;
-import com.shareit.domain.dto.registration.ConfirmationToken;
+import com.shareit.domain.dto.registration.ConfirmationTokenEntity;
 import com.shareit.domain.entity.UserEntity;
 import com.shareit.utils.commons.email.EmailSender;
 import com.shareit.utils.commons.email.MailDetail;
@@ -22,11 +22,11 @@ public class ConfirmationTokenService {
         this.emailSender = emailSender;
     }
 
-    public void saveConfirmationToken(ConfirmationToken token) {
+    public void saveConfirmationToken(ConfirmationTokenEntity token) {
         confirmationTokenRepository.save(token);
     }
 
-    public Optional<ConfirmationToken> getConfirmationTokenByToken(String token) {
+    public Optional<ConfirmationTokenEntity> getConfirmationTokenByToken(String token) {
         return confirmationTokenRepository.findByToken(token);
     }
 
@@ -39,7 +39,7 @@ public class ConfirmationTokenService {
     private String createToken(UserEntity userEntity) {
         String token = UUID.randomUUID().toString();
         saveConfirmationToken(
-                new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), userEntity));
+                new ConfirmationTokenEntity(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), userEntity));
         return token;
     }
 

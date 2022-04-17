@@ -2,7 +2,7 @@ package com.shareit.service.registration;
 
 import com.shareit.domain.dto.UserRegistration;
 import com.shareit.domain.dto.UserCreated;
-import com.shareit.domain.dto.registration.ConfirmationToken;
+import com.shareit.domain.dto.registration.ConfirmationTokenEntity;
 import com.shareit.domain.entity.UserEntity;
 import com.shareit.service.UserService;
 import com.shareit.utils.commons.exception.BadRequestException;
@@ -24,19 +24,19 @@ public class RegistrationService {
         UserEntity userEntity = userService.signUpUser(userRegistration);
 
         confirmationTokenService.createAndsendEmailConfirmationTokenEmailToUser(userEntity);
-        return new UserCreated(userEntity.getId(), "");
+        return new UserCreated(userEntity.getId());
     }
 
     public String confirmToken(String token) {
-        ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationTokenByToken(token)
+        ConfirmationTokenEntity confirmationTokenEntity = confirmationTokenService.getConfirmationTokenByToken(token)
                 .orElseThrow(() -> new BadRequestException("token not found"));
 
-        if(confirmationToken.getConfirmedAt() != null) {
+        if(confirmationTokenEntity.getConfirmedAt() != null) {
             throw new BadRequestException("email already confirmed");
         }
 
         confirmationTokenService.setConfirmedAt(token);
-        userService.enableAppUser(confirmationToken.getUser().getEmail());
+        userService.enableAppUser(confirmationTokenEntity.getUser().getEmail());
 
         return "confirmed";
     }

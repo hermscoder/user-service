@@ -116,15 +116,15 @@ class UserServiceTest {
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
 
 
-        UserEntity userCreated = userService.signUpUser(userRegistration);
+        UserEntity userEntityCreated = userService.signUpUser(userRegistration);
 
         verify(userRepository).save(
                 new UserEntity(userRegistration.getEmail(),
                 "HHV$%%^5478yhgvbtFv34#$b",
                         userRegistration.getName(),
                         userRegistration.getBirthDate()));
-        assertNotNull(userCreated);
-        assertEquals(userEntity, userCreated);
+        assertNotNull(userEntityCreated);
+        assertEquals(userEntity, userEntityCreated);
     }
 
 }

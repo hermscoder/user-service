@@ -1,6 +1,6 @@
 package com.shareit.data.repository.registration;
 
-import com.shareit.domain.dto.registration.ConfirmationToken;
+import com.shareit.domain.dto.registration.ConfirmationTokenEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
-public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Long> {
+public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationTokenEntity, Long> {
     //TODO add tests
-    Optional<ConfirmationToken> findByToken(String token);
+    Optional<ConfirmationTokenEntity> findByToken(String token);
 
     @Transactional
     @Modifying
-    @Query("UPDATE ConfirmationToken c SET c.confirmedAt = ?2 WHERE c.token = ?1")
+    @Query("UPDATE ConfirmationTokenEntity c SET c.confirmedAt = ?2 WHERE c.token = ?1")
     int updateConfirmedAt(String token,
                           LocalDateTime confirmedAt);
 
