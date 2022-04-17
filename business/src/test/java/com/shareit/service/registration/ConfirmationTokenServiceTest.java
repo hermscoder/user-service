@@ -85,8 +85,8 @@ class ConfirmationTokenServiceTest {
     @Test
     void setConfirmedAt() {
         when(confirmationTokenRepository.updateConfirmedAt(anyString(), any(LocalDateTime.class))).thenReturn(1);
-        int repositoryAnswer = confirmationTokenService.setConfirmedAt(token);
-        assertEquals(1, repositoryAnswer);
+        int rowsAffected = confirmationTokenService.setConfirmedAt(token);
+        assertEquals(1, rowsAffected);
         verify(confirmationTokenRepository).updateConfirmedAt(token, dateTime);
     }
 

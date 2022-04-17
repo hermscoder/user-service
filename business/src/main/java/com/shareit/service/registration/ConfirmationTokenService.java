@@ -18,7 +18,7 @@ public class ConfirmationTokenService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final EmailSender emailSender;
     private final DateProvider dateProvider;
-    //TODO add tests
+
     public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository, EmailSender emailSender, DateProvider dateProvider) {
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.emailSender = emailSender;
