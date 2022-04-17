@@ -1,24 +1,31 @@
 package com.shareit.presentation;
 
-import com.shareit.service.AuthService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.shareit.domain.dto.CreateUser;
+import com.shareit.domain.dto.UserCreated;
+import com.shareit.service.RegistrationService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/v1/registration")
 public class RegistrationController {
 
     //TODO Add tests
-    private final AuthService authService;
+    private final RegistrationService registrationService;
 
-    public RegistrationController(AuthService authService) {
-        this.authService = authService;
+    public RegistrationController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
+
+    @PostMapping
+    public ResponseEntity<UserCreated> userRegistration(@Valid @RequestBody CreateUser createUser) {
+        return ResponseEntity.ok(registrationService.registerUser(createUser));
     }
 
     @GetMapping(path = "confirm")
-    public String confirm(@RequestParam("token") String token) {
-        return authService.confirmToken(token);
+    public ResponseEntity<String> confirm(@RequestParam("token") String token) {
+        return ResponseEntity.ok(registrationService.confirmToken(token));
     }
 }
