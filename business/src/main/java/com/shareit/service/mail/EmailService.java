@@ -1,5 +1,6 @@
 package com.shareit.service.mail;
 
+import com.shareit.utils.commons.email.EmailDataModel;
 import com.shareit.utils.commons.email.EmailSender;
 import com.shareit.utils.commons.email.MailDetail;
 import freemarker.template.Configuration;
@@ -34,12 +35,12 @@ public class EmailService implements EmailSender {
 
     @Override
     @Async
-    public void send(MailDetail request, HashMap<String, Object> model) {
+    public void send(MailDetail request, EmailDataModel model) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
             Template t = configuration.getTemplate("emailConfirmation.ftl");
-            model.put("subject", request.getSubject());
+            model.setSubject(request.getSubject());
 
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
 
