@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationTokenEntity, Long> {
-    //TODO add tests
     Optional<ConfirmationTokenEntity> findByToken(String token);
 
     @Transactional
