@@ -1,13 +1,10 @@
 package com.shareit.presentation;
 
-import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
-import com.shareit.domain.dto.UserCreated;
 import com.shareit.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
 
 @RestController
@@ -24,8 +21,4 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(userId));
     }
 
-    @PostMapping
-    public ResponseEntity<UserCreated> userRegister(@Valid @RequestBody CreateUser createUser) {
-        return ResponseEntity.ok(userService.signUpUser(createUser));
-    }
 }

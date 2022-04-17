@@ -39,7 +39,7 @@ public class UserService {
         return UserMapper.INSTANCE.toModel(userOptional.get());
     }
 
-    public UserCreated signUpUser(CreateUser createUser) {
+    public UserEntity signUpUser(CreateUser createUser) {
         if(!emailValidator.isValid(createUser.getEmail())) {
             throw new InvalidParameterException("email");
         }
@@ -53,10 +53,7 @@ public class UserService {
                         encrypter.encrypt(createUser.getPassword()),
                         createUser.getName(),
                         createUser.getBirthDate()));
-
-        //TODO send email to the user to confirm the account
-        confirmationTokenService.createAndsendEmailConfirmationTokenEmailToUser(userEntity);
-        return new UserCreated(userEntity.getId(), "");
+        return userEntity;
     }
 
 

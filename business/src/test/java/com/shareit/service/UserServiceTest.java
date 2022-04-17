@@ -4,7 +4,6 @@ import com.shareit.data.repository.UserRepository;
 import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.User;
-import com.shareit.domain.dto.UserCreated;
 import com.shareit.domain.entity.UserState;
 import com.shareit.service.registration.ConfirmationTokenService;
 import com.shareit.utils.commons.exception.InvalidParameterException;
@@ -40,16 +39,16 @@ class UserServiceTest {
             birthDate);
 
 
-    private UserEntity userEntities = new UserEntity(1L,
+    private UserEntity userEntity = new UserEntity(1L,
             "any_email@mail.com",
-            "any_password",
+            "HHV$%%^5478yhgvbtFv34#$b",
             "any_name",
             birthDate,
             UserState.CONFIRMED);
 
     private User userModelExpected = new User(1L,
             "any_email@mail.com",
-            "any_password",
+            "HHV$%%^5478yhgvbtFv34#$b",
             "any_name",
             birthDate,
             true);
@@ -65,7 +64,7 @@ class UserServiceTest {
 
     @Test
     public void testFindById() {
-        when(userRepository.findById(anyLong())).thenReturn(Optional.of(userEntities));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(userEntity));
 
         User user = userService.findById(1L);
 
@@ -93,7 +92,7 @@ class UserServiceTest {
     @Test
     public void testCreateUserWithWrongPasswordConfirmation() {
         when(emailValidator.isValid(anyString())).thenReturn(true);
-        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntities);
+        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
         createUser.setPasswordConfirmation("wrong_password");
 
         InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userService.signUpUser(createUser));
@@ -105,7 +104,7 @@ class UserServiceTest {
     public void testCreateUserWhenEncrypterThrowsException() {
         when(emailValidator.isValid(anyString())).thenReturn(true);
         when(encrypter.encrypt(anyString())).thenThrow(RuntimeException.class);
-        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntities);
+        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
 
         assertThrows(Exception.class, () -> userService.signUpUser(createUser));
     }
@@ -114,17 +113,18 @@ class UserServiceTest {
     public void testCreateUser() {
         when(emailValidator.isValid(anyString())).thenReturn(true);
         when(encrypter.encrypt(anyString())).thenReturn("HHV$%%^5478yhgvbtFv34#$b");
-        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntities);
+        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
 
 
-        UserCreated userCreated = userService.signUpUser(createUser);
+        UserEntity userCreated = userService.signUpUser(createUser);
 
         verify(userRepository).save(
                 new UserEntity(createUser.getEmail(),
                 "HHV$%%^5478yhgvbtFv34#$b",
                         createUser.getName(),
                         createUser.getBirthDate()));
-        assertEquals(1L, userCreated.getId());
+        assertNotNull(userCreated);
+        assertEquals(userEntity, userCreated);
     }
 
 }

@@ -54,35 +54,5 @@ public class UserControllerTest {
         assertEquals("User not found: 1", userNotFoundException.getMessage());
     }
 
-    @Test
-    public void testUserRegister() {
-        when(userService.signUpUser(any(CreateUser.class))).thenReturn(new UserCreated(1L, UUID.randomUUID().toString()));
-
-        ResponseEntity<UserCreated> userCreatedResponseEntity = userController.userRegister(
-                new CreateUser("any_email@mail.com",
-                        "any_password",
-                        "any_password",
-                        "any_name",
-                        LocalDate.now()));
-        assertNotNull(userCreatedResponseEntity);
-        assertEquals(HttpStatus.OK, userCreatedResponseEntity.getStatusCode());
-        assertEquals(1L, userCreatedResponseEntity.getBody().getId());
-    }
-
-    @Test
-    public void testUserRegisterThrowInvalidParameterException() {
-        when(userService.signUpUser(any(CreateUser.class))).thenThrow(new InvalidParameterException("passwordConfirmation"));
-
-        InvalidParameterException invalidParameterException = assertThrows(InvalidParameterException.class, () -> userController.userRegister(
-                new CreateUser("any_email@mail.com",
-                        "any_password",
-                        "wrong_password",
-                        "any_name",
-                        LocalDate.now())));
-
-        assertNotNull(invalidParameterException);
-        assertEquals("passwordConfirmation", invalidParameterException.getParamName());
-        assertEquals("Invalid param: passwordConfirmation", invalidParameterException.getMessage());
-    }
 
 }
