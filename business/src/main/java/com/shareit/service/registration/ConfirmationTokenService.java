@@ -1,13 +1,14 @@
 package com.shareit.service.registration;
 
 import com.shareit.data.repository.registration.ConfirmationTokenRepository;
+import com.shareit.domain.dto.email.ConfirmationEmailData;
 import com.shareit.domain.dto.registration.ConfirmationTokenEntity;
 import com.shareit.domain.entity.UserEntity;
+import com.shareit.utils.commons.provider.DateProvider;
 import com.shareit.utils.commons.email.EmailSender;
 import com.shareit.utils.commons.email.MailDetail;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,10 +17,12 @@ import java.util.UUID;
 public class ConfirmationTokenService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final EmailSender emailSender;
+    private final DateProvider dateProvider;
     //TODO add tests
-    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository, EmailSender emailSender) {
+    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository, EmailSender emailSender, DateProvider dateProvider) {
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.emailSender = emailSender;
+        this.dateProvider = dateProvider;
     }
 
     public void saveConfirmationToken(ConfirmationTokenEntity token) {
@@ -32,31 +35,31 @@ public class ConfirmationTokenService {
 
     public int setConfirmedAt(String token) {
         return confirmationTokenRepository.updateConfirmedAt(
-                token, LocalDateTime.now());
+                token, dateProvider.getNowDateTime());
     }
 
 
     private String createToken(UserEntity userEntity) {
         String token = UUID.randomUUID().toString();
         saveConfirmationToken(
-                new ConfirmationTokenEntity(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), userEntity));
+                new ConfirmationTokenEntity(token, dateProvider.getNowDateTime(), dateProvider.getNowDateTime().plusMinutes(15), userEntity));
         return token;
     }
 
-    public void createAndsendEmailConfirmationTokenEmailToUser(UserEntity userEntity) {
+    public void createAndSendEmailConfirmationTokenEmailToUser(UserEntity userEntity) {
         String token = createToken(userEntity);
         //TODO replace for website URL
         String confirmationLink = "http://localhost:8080/v1/registration/confirm?token=" + token;
 
-        HashMap<String, Object> templateValues = new HashMap<>();
-        templateValues.put("name", userEntity.getName());
-        templateValues.put("link", confirmationLink);
 
         emailSender.send(MailDetail.newBuilder()
                         .from("shareit")
                         .to(userEntity.getEmail())
                         .name(userEntity.getName())
                         .subject("Confirm your email")
-                        .build(), templateValues);
+                        .build(),
+                ConfirmationEmailData.builder()
+                        .name(userEntity.getName())
+                        .link(confirmationLink).build());
     }
 }
