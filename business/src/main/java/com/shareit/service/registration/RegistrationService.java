@@ -23,7 +23,7 @@ public class RegistrationService {
     public UserCreated registerUser(UserRegistration userRegistration) {
         UserEntity userEntity = userService.signUpUser(userRegistration);
 
-        confirmationTokenService.createAndsendEmailConfirmationTokenEmailToUser(userEntity);
+        confirmationTokenService.createAndSendEmailConfirmationTokenEmailToUser(userEntity);
         return new UserCreated(userEntity.getId());
     }
 

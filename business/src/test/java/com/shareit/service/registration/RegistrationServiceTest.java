@@ -64,7 +64,7 @@ class RegistrationServiceTest {
         UserCreated userCreated = registrationService.registerUser(userRegistration);
         assertNotNull(userCreated);
         assertEquals(expectedUserCreated.getId(), userCreated.getId());
-        verify(confirmationTokenService).createAndsendEmailConfirmationTokenEmailToUser(userEntity);
+        verify(confirmationTokenService).createAndSendEmailConfirmationTokenEmailToUser(userEntity);
 
     }
 
