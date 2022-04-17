@@ -7,14 +7,17 @@ import com.shareit.domain.entity.UserEntity;
 import com.shareit.utils.commons.provider.DateProvider;
 import com.shareit.utils.commons.email.EmailSender;
 import com.shareit.utils.commons.email.MailDetail;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class ConfirmationTokenService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ConfirmationTokenService.class);
+
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final EmailSender emailSender;
     private final DateProvider dateProvider;
@@ -60,6 +63,12 @@ public class ConfirmationTokenService {
                         .build(),
                 ConfirmationEmailData.builder()
                         .name(userEntity.getName())
-                        .link(confirmationLink).build());
+                        .link(confirmationLink).build())
+                .whenCompleteAsync((res, ex) -> {
+                    if (ex != null) {
+                        LOGGER.error(ex.getMessage(), ex);
+                        //TODO add to Queue to try again later.
+                    }
+                });
     }
 }

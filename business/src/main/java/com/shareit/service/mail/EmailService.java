@@ -19,13 +19,10 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class EmailService implements EmailSender {
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
-
     private final JavaMailSender mailSender;
     private final Configuration configuration;
 
@@ -36,7 +33,8 @@ public class EmailService implements EmailSender {
 
     @Override
     @Async
-    public void send(MailDetail request, EmailDataModel model) {
+    public CompletableFuture<Void> send(MailDetail request, EmailDataModel model) {
+        CompletableFuture completableFuture = new CompletableFuture();
         MimeMessage message = mailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
@@ -50,9 +48,10 @@ public class EmailService implements EmailSender {
             helper.setSubject(request.getSubject());
             helper.setText(html, true);
             mailSender.send(message);
+            completableFuture.complete("");
         } catch (MessagingException | IOException | TemplateException e) {
-            LOGGER.error("failed to send email", e);
-            throw new EmailSenderException("failed to send email");
+            completableFuture.completeExceptionally(new EmailSenderException("failed to send email"));
         }
+        return completableFuture;
     }
 }

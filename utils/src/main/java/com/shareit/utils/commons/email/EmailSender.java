@@ -1,6 +1,8 @@
 package com.shareit.utils.commons.email;
 
 
+import java.util.concurrent.CompletableFuture;
+
 public interface EmailSender {
-    void send(MailDetail request, EmailDataModel model);
+    CompletableFuture<Void> send(MailDetail request, EmailDataModel model);
 }
