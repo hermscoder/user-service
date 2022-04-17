@@ -2,7 +2,7 @@ package com.shareit.presentation;
 
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.UserCreated;
-import com.shareit.service.RegistrationService;
+import com.shareit.service.registration.RegistrationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,6 @@ import javax.validation.Valid;
 @RequestMapping(path = "/v1/registration")
 public class RegistrationController {
 
-    //TODO Add tests
     private final RegistrationService registrationService;
 
     public RegistrationController(RegistrationService registrationService) {

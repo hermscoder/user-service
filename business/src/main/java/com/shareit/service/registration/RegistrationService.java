@@ -1,10 +1,10 @@
-package com.shareit.service;
+package com.shareit.service.registration;
 
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.UserCreated;
 import com.shareit.domain.dto.registration.ConfirmationToken;
 import com.shareit.domain.entity.UserEntity;
-import com.shareit.service.registration.ConfirmationTokenService;
+import com.shareit.service.UserService;
 import com.shareit.utils.commons.exception.BadRequestException;
 import org.springframework.stereotype.Service;
 

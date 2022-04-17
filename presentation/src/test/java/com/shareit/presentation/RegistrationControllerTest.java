@@ -2,7 +2,7 @@ package com.shareit.presentation;
 
 import com.shareit.domain.dto.CreateUser;
 import com.shareit.domain.dto.UserCreated;
-import com.shareit.service.RegistrationService;
+import com.shareit.service.registration.RegistrationService;
 import com.shareit.utils.commons.exception.BadRequestException;
 import com.shareit.utils.commons.exception.InvalidParameterException;
 import org.junit.jupiter.api.Test;
