@@ -5,9 +5,12 @@ import com.shareit.domain.dto.email.ConfirmationEmailData;
 import com.shareit.domain.dto.registration.ConfirmationTokenEntity;
 import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.entity.UserState;
+import com.shareit.utils.commons.email.EmailDataModel;
 import com.shareit.utils.commons.email.MailDetail;
+import com.shareit.utils.commons.exception.EmailSenderException;
 import com.shareit.utils.commons.provider.DateProvider;
 import com.shareit.utils.commons.email.EmailSender;
+import freemarker.template.TemplateException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -103,5 +106,15 @@ class ConfirmationTokenServiceTest {
 
         confirmationTokenService.createAndSendEmailConfirmationTokenEmailToUser(userEntity);
         verify(emailSender).send(mailDetail, confirmationLink);
+    }
+
+    @Test
+    void createAndSendEmailConfirmationTokenEmailToUserThrowsEmailSenderException() {
+        doThrow(new EmailSenderException("failed to send email")).when(emailSender).send(any(MailDetail.class), any(EmailDataModel.class));
+
+        EmailSenderException emailSenderException = assertThrows(EmailSenderException.class, () -> confirmationTokenService.createAndSendEmailConfirmationTokenEmailToUser(userEntity));
+
+        assertNotNull(emailSenderException);
+        assertEquals("failed to send email", emailSenderException.getMessage());
     }
 }
