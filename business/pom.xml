@@ -16,17 +16,17 @@
         <dependency>
             <groupId>com.shareit</groupId>
             <artifactId>data</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.shareit</groupId>
             <artifactId>utils</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.shareit</groupId>
             <artifactId>infrastructure</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
