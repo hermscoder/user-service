@@ -1,5 +1,8 @@
 package com.shareit.utils.commons.email;
 
+import java.util.Objects;
+
+
 public class MailDetail {
 
     private String name;
@@ -34,6 +37,16 @@ public class MailDetail {
         return new MailDetail.Builder();
     }
 
+    @Override
+    public String toString() {
+        return "MailDetail{" +
+                "name='" + name + '\'' +
+                ", to='" + to + '\'' +
+                ", from='" + from + '\'' +
+                ", subject='" + subject + '\'' +
+                '}';
+    }
+
     public static class Builder {
         private String name;
         private String to;
@@ -66,5 +79,18 @@ public class MailDetail {
             this.subject = subject;
             return this;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MailDetail that = (MailDetail) o;
+        return Objects.equals(name, that.name) && Objects.equals(to, that.to) && Objects.equals(from, that.from) && Objects.equals(subject, that.subject);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, to, from, subject);
     }
 }

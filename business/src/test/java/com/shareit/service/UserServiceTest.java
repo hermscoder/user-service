@@ -47,8 +47,6 @@ class UserServiceTest {
             UserState.CONFIRMED);
 
     private User userModelExpected = new User(1L,
-            "any_email@mail.com",
-            "HHV$%%^5478yhgvbtFv34#$b",
             "any_name",
             birthDate,
             true);

@@ -16,8 +16,6 @@ import java.time.LocalDate;
 public class User {
 
     private Long id;
-    private String email;
-    private String password;
     private String name;
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -27,7 +25,7 @@ public class User {
 //    private Media profilePicture;
 //    private List<Interest> interests;
 
-    public User(String email, String password, String name, LocalDate birthDate, Boolean confirmed) {
-        this(null,email, password, name, birthDate, confirmed);
+    public User(String name, LocalDate birthDate, Boolean confirmed) {
+        this(null, name, birthDate, confirmed);
     }
 }

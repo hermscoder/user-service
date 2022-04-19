@@ -24,8 +24,6 @@ class UserMapperTest {
             UserState.CONFIRMED);
 
     private final User userModel = new User(1L,
-            "any_email@mail.com",
-            "any_password",
             "any_name",
             birthDate,
             true);
