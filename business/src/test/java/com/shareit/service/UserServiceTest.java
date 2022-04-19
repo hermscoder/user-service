@@ -57,7 +57,7 @@ class UserServiceTest {
         encrypter = Mockito.mock(Encrypter.class);
         confirmationTokenService = Mockito.mock(ConfirmationTokenService.class);
 
-        this.userService = new UserService(userRepository, emailValidator, encrypter, confirmationTokenService);
+        this.userService = new UserService(userRepository, emailValidator, encrypter);
     }
 
     @Test
