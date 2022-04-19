@@ -15,17 +15,19 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class UserControllerWebTest {
+class UserAndRegistrationControllersWebTest {
 
+    private static final String REGISTRATION_ENDPOINT = "/v1/registration";
     private static final String USER_ENDPOINT = "/v1/user";
 
     @Autowired
@@ -39,12 +41,13 @@ class UserControllerWebTest {
             "any_name",
             birthDate);
 
+
     @Test
     @Order(1)
     public void testUserRegisterOk() throws Exception {
 
         mockMvc.perform(
-                post(USER_ENDPOINT)
+                post(REGISTRATION_ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(userRegistration))
                         .with(csrf()))
@@ -64,7 +67,7 @@ class UserControllerWebTest {
                 LocalDate.now());
 
         mockMvc.perform(
-                post(USER_ENDPOINT)
+                post(REGISTRATION_ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(userRegistration))
                         .with(csrf()))
@@ -83,7 +86,7 @@ class UserControllerWebTest {
                 LocalDate.now());
 
         mockMvc.perform(
-                post(USER_ENDPOINT)
+                post(REGISTRATION_ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(userRegistration))
                         .with(csrf()))
@@ -98,9 +101,20 @@ class UserControllerWebTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("1"))
                 .andExpect(jsonPath("$.birthDate").value(birthDate.toString()))
-                .andExpect(jsonPath("$.email").value("any_email@mail.com"))
+                .andExpect(jsonPath("$.confirmed").value("false"))
                 .andExpect(jsonPath("$.name").value("any_name"));
     }
+
+    @Test
+    @Order(5)
+    public void testEmailConfirmationWithoutToken() throws Exception {
+        mockMvc.perform(
+                get(REGISTRATION_ENDPOINT + "/confirm?token=").with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("BadRequestException"))
+                .andExpect(jsonPath("$.message").value("token not found"));
+    }
+
 
     public static String asJsonString(final Object obj) {
         try {
