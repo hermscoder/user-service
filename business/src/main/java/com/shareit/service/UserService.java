@@ -21,13 +21,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final EmailValidator emailValidator;
     private final Encrypter encrypter;
-    private final ConfirmationTokenService confirmationTokenService;
 
-    public UserService(UserRepository userRepository, EmailValidator emailValidator, Encrypter encrypter, ConfirmationTokenService confirmationTokenService) {
+    public UserService(UserRepository userRepository, EmailValidator emailValidator, Encrypter encrypter) {
         this.userRepository = userRepository;
         this.emailValidator = emailValidator;
         this.encrypter = encrypter;
-        this.confirmationTokenService = confirmationTokenService;
     }
 
     public User findById(Long userId) {
