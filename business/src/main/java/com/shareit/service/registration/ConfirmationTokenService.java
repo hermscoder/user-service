@@ -42,7 +42,7 @@ public class ConfirmationTokenService {
     }
 
 
-    private String createToken(UserEntity userEntity) {
+    String createToken(UserEntity userEntity) {
         String token = UUID.randomUUID().toString();
         saveConfirmationToken(
                 new ConfirmationTokenEntity(token, dateProvider.getNowDateTime(), dateProvider.getNowDateTime().plusMinutes(15), userEntity));

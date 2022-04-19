@@ -10,13 +10,13 @@ import com.shareit.utils.commons.email.MailDetail;
 import com.shareit.utils.commons.exception.EmailSenderException;
 import com.shareit.utils.commons.provider.DateProvider;
 import com.shareit.utils.commons.email.EmailSender;
-import freemarker.template.TemplateException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -92,10 +92,28 @@ class ConfirmationTokenServiceTest {
 
     @Test
     void createAndSendEmailConfirmationTokenEmailToUser() {
+        String mockedToken = "6abd9db3-40b4-4c4c-bd7d-dece44f9f86e";
 
+        ConfirmationTokenService confirmationTokenServiceStub =
+                new ConfirmationTokenService(
+                        confirmationTokenRepository,
+                        emailSender,
+                        new DateProvider() {
+                            @Override
+                            public LocalDateTime getNowDateTime() {
+                                return dateTime;
+                            }
+                        }) {
+                    @Override
+                    String createToken(UserEntity userEntity) {
+                        return mockedToken;
+                    }
+                };
+
+        when(emailSender.send(any(MailDetail.class),any(EmailDataModel.class))).thenReturn(CompletableFuture.completedFuture(null));
         ConfirmationEmailData confirmationLink = ConfirmationEmailData.builder()
                 .name(userEntity.getName())
-                .link("confirmationLink").build();
+                .link("http://localhost:8080/v1/registration/confirm?token=" + mockedToken).build();
 
         MailDetail mailDetail = MailDetail.newBuilder()
                 .from("shareit")
@@ -104,7 +122,7 @@ class ConfirmationTokenServiceTest {
                 .subject("Confirm your email")
                 .build();
 
-        confirmationTokenService.createAndSendEmailConfirmationTokenEmailToUser(userEntity);
+        confirmationTokenServiceStub.createAndSendEmailConfirmationTokenEmailToUser(userEntity);
         verify(emailSender).send(mailDetail, confirmationLink);
     }
 
