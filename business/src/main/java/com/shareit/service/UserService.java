@@ -6,7 +6,6 @@ import com.shareit.domain.dto.UserRegistration;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.entity.UserState;
 import com.shareit.domain.mapper.UserMapper;
-import com.shareit.service.registration.ConfirmationTokenService;
 import com.shareit.utils.commons.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
 import com.shareit.infrastructure.cryptography.Encrypter;
