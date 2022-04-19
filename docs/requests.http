@@ -1,5 +1,5 @@
 ### POST User registation
-POST http://localhost:8080/v1/registration
+POST http://{{host}}/v1/registration
 Content-Type: application/json
 
 {
@@ -10,10 +10,14 @@ Content-Type: application/json
   "birthDate": "2022-04-09"
 }
 
+> {%
+client.global.set("userId", response.body.id);
+%}
+
 ### GET Token Confirmation
-POST http://localhost:8080/v1/registration/confirm?token={token}
+GET http://{{host}}/v1/registration/confirm?token={{$uuid}}
 Content-Type: application/json
 
 ### GET User details
-GET http://localhost:8080/v1/user/{userId}
+GET http://{{host}}/v1/user/{{userId}}
 Accept: application/json
