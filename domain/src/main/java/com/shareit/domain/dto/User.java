@@ -25,7 +25,4 @@ public class User {
 //    private Media profilePicture;
 //    private List<Interest> interests;
 
-    public User(String name, LocalDate birthDate, Boolean confirmed) {
-        this(null, name, birthDate, confirmed);
-    }
 }
