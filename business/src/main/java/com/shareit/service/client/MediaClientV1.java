@@ -7,6 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 public class MediaClientV1 implements MediaClient {
 
+    private static final String MEDIA_SERVICE_URL = "http://localhost:8082/v1/media";
     private final WebClient webClient;
 
     public MediaClientV1(WebClient webClient) {
@@ -15,8 +16,7 @@ public class MediaClientV1 implements MediaClient {
 
     public Media getMediaById(Long mediaId) {
         Media userMedia = webClient.get()
-                .uri("http://localhost:8082/v1/media",
-                        uriBuilder -> uriBuilder.build(mediaId))
+                .uri(MEDIA_SERVICE_URL, uriBuilder -> uriBuilder.build(mediaId))
                 .retrieve()
                 .bodyToMono(Media.class)
                 .block();
