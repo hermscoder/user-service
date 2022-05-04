@@ -1,8 +1,10 @@
 package com.shareit.service.client;
 
 import com.shareit.domain.dto.Media;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@Service
 public class MediaClientV1 implements MediaClient {
 
     private final WebClient webClient;
