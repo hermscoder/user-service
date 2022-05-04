@@ -5,6 +5,7 @@ import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.dto.registration.UserRegistration;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.entity.UserState;
+import com.shareit.service.client.MediaClient;
 import com.shareit.service.registration.ConfirmationTokenService;
 import com.shareit.utils.commons.exception.InvalidParameterException;
 import com.shareit.exception.UserNotFoundException;
@@ -12,6 +13,7 @@ import com.shareit.infrastructure.cryptography.Encrypter;
 import com.shareit.utils.validator.EmailValidator;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -29,6 +31,7 @@ class UserServiceTest {
     private final EmailValidator emailValidator;
     private final Encrypter encrypter;
     private final ConfirmationTokenService confirmationTokenService;
+    private final MediaClient mediaClient;
 
     private final LocalDate birthDate = LocalDate.now();
     private final UserRegistration userRegistration = new UserRegistration(
@@ -37,6 +40,7 @@ class UserServiceTest {
             "any_password",
             "any_name",
             birthDate);
+
 
 
     private UserEntity userEntity = new UserEntity(1L,
@@ -56,8 +60,9 @@ class UserServiceTest {
         emailValidator = Mockito.mock(EmailValidator.class);
         encrypter = Mockito.mock(Encrypter.class);
         confirmationTokenService = Mockito.mock(ConfirmationTokenService.class);
+        mediaClient = Mockito.mock(MediaClient.class);
 
-        this.userService = new UserService(userRepository, emailValidator, encrypter, webClient);
+        this.userService = new UserService(userRepository, emailValidator, encrypter, mediaClient);
     }
 
     @Test
