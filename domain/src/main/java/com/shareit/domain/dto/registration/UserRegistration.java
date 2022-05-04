@@ -1,4 +1,4 @@
-package com.shareit.domain.dto;
+package com.shareit.domain.dto.registration;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

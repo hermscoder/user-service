@@ -2,7 +2,7 @@ package com.shareit.service;
 
 import com.shareit.data.repository.UserRepository;
 import com.shareit.domain.entity.UserEntity;
-import com.shareit.domain.dto.UserRegistration;
+import com.shareit.domain.dto.registration.UserRegistration;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.entity.UserState;
 import com.shareit.service.registration.ConfirmationTokenService;
@@ -57,14 +57,14 @@ class UserServiceTest {
         encrypter = Mockito.mock(Encrypter.class);
         confirmationTokenService = Mockito.mock(ConfirmationTokenService.class);
 
-        this.userService = new UserService(userRepository, emailValidator, encrypter);
+        this.userService = new UserService(userRepository, emailValidator, encrypter, webClient);
     }
 
     @Test
     public void testFindById() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(userEntity));
 
-        User user = userService.findById(1L);
+        User user = userService.getUserById(1L);
 
         assertNotNull(user);
         assertEquals(userModelExpected, user);
@@ -74,7 +74,7 @@ class UserServiceTest {
     public void testFindByIdNotFound() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class, () -> userService.findById(1L));
+        UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class, () -> userService.getUserById(1L));
 
         assertEquals(1L, userNotFoundException.getUserId());
         assertEquals("User not found: 1", userNotFoundException.getMessage());

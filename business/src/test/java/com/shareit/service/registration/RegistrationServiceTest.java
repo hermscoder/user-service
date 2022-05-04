@@ -1,7 +1,7 @@
 package com.shareit.service.registration;
 
 import com.shareit.domain.dto.UserCreated;
-import com.shareit.domain.dto.UserRegistration;
+import com.shareit.domain.dto.registration.UserRegistration;
 import com.shareit.domain.dto.registration.ConfirmationTokenEntity;
 import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.entity.UserState;

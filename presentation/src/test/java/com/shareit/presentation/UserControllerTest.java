@@ -31,7 +31,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetUserById() {
-        when(userService.findById(anyLong())).thenReturn(expectedUser);
+        when(userService.getUserById(anyLong())).thenReturn(expectedUser);
         ResponseEntity<User> userByIdResponseEntity = userController.getUserById(1L);
         assertNotNull(userByIdResponseEntity);
         assertEquals(HttpStatus.OK, userByIdResponseEntity.getStatusCode());
@@ -41,7 +41,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetUserByIdThrowUserNotFoundException() {
-        when(userService.findById(anyLong())).thenThrow(new UserNotFoundException(1L));
+        when(userService.getUserById(anyLong())).thenThrow(new UserNotFoundException(1L));
 
         UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class, () -> userController.getUserById(1L));
 

@@ -1,6 +1,6 @@
 package com.shareit.presentation;
 
-import com.shareit.domain.dto.UserRegistration;
+import com.shareit.domain.dto.registration.UserRegistration;
 import com.shareit.domain.dto.UserCreated;
 import com.shareit.service.registration.RegistrationService;
 import com.shareit.utils.commons.exception.BadRequestException;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

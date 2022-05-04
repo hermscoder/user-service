@@ -1,7 +1,7 @@
 package com.shareit.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shareit.domain.dto.UserRegistration;
+import com.shareit.domain.dto.registration.UserRegistration;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
