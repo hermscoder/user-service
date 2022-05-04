@@ -1,7 +1,7 @@
 package com.shareit.presentation;
 
 import com.shareit.domain.dto.registration.UserRegistration;
-import com.shareit.domain.dto.UserCreated;
+import com.shareit.domain.dto.registration.UserCreated;
 import com.shareit.service.registration.RegistrationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

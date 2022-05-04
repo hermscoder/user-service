@@ -1,4 +1,4 @@
-package com.shareit.domain.dto;
+package com.shareit.domain.dto.registration;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
