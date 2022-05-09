@@ -1,6 +1,7 @@
 package com.shareit.service;
 
 import com.shareit.data.repository.UserRepository;
+import com.shareit.domain.dto.Media;
 import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.dto.registration.UserRegistration;
 import com.shareit.domain.dto.User;
@@ -48,12 +49,14 @@ class UserServiceTest {
             "HHV$%%^5478yhgvbtFv34#$b",
             "any_name",
             birthDate,
-            UserState.CONFIRMED);
+            UserState.CONFIRMED,
+            1L);
 
     private User userModelExpected = new User(1L,
             "any_name",
             birthDate,
-            true);
+            true,
+            null);
 
     public UserServiceTest() {
         userRepository = Mockito.mock(UserRepository.class);
