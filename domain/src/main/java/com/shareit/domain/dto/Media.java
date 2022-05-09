@@ -1,12 +1,12 @@
 package com.shareit.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Getter
+@EqualsAndHashCode
 public class Media {
     private Long id;
     private String url;
