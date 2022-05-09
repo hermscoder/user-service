@@ -16,6 +16,7 @@ public class UserServiceSecurityConfigurer extends SecurityConfigurer {
             "/auth/forgot/**",
             "/v1/user/**",
             "/v1/registration/**",
+            "/v1/user/profile-picture"
     };
 
     private static  final String [] PUBLIC_MATCHERS_GET = {
@@ -23,7 +24,9 @@ public class UserServiceSecurityConfigurer extends SecurityConfigurer {
             "/property/**"
     };
     private static  final String [] PUBLIC_MATCHERS_POST = {
-            "/auth/forgot/**"
+            "/auth/forgot/**",
+            "/v1/user/profile-picture"
+
     };
     private static  final String [] PUBLIC_MATCHERS_DELETE = {
     };
