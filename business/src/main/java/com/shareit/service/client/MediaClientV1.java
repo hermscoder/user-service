@@ -16,7 +16,7 @@ public class MediaClientV1 implements MediaClient {
 
     public Media getMediaById(Long mediaId) {
         Media userMedia = webClient.get()
-                .uri(MEDIA_SERVICE_URL, uriBuilder -> uriBuilder.build(mediaId))
+                .uri(MEDIA_SERVICE_URL, uriBuilder -> uriBuilder.pathSegment(String.valueOf(mediaId)).build())
                 .retrieve()
                 .bodyToMono(Media.class)
                 .block();
