@@ -1,20 +1,27 @@
 package com.shareit.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shareit.domain.dto.Media;
 import com.shareit.domain.dto.registration.UserRegistration;
+import com.shareit.service.client.MediaClient;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -30,9 +37,6 @@ class UserAndRegistrationControllersWebTest {
     private static final String REGISTRATION_ENDPOINT = "/v1/registration";
     private static final String USER_ENDPOINT = "/v1/user";
 
-    @Autowired
-    private MockMvc mockMvc;
-
     private final LocalDate birthDate = LocalDate.now();
     private final UserRegistration userRegistration = new UserRegistration(
             "any_email@mail.com",
@@ -41,6 +45,11 @@ class UserAndRegistrationControllersWebTest {
             "any_name",
             birthDate);
 
+    @MockBean
+    private MediaClient mediaClient;
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
     @Order(1)
@@ -97,6 +106,8 @@ class UserAndRegistrationControllersWebTest {
     @Test
     @Order(4)
     public void testGetUserById() throws Exception {
+        when(mediaClient.getMediaById(anyLong())).thenReturn(Media.builder().id(1L).type("IMAGE").url("http://test.url.com").build());
+
         mockMvc.perform(get(USER_ENDPOINT + "/1").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("1"))
