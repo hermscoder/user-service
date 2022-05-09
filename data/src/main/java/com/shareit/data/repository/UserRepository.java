@@ -14,6 +14,12 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE UserEntity a " +
-            "SET a.state = ?1  WHERE a.email = ?2")
+            "SET a.state = ?1  WHERE a.id = ?2")
     int changeUserState(UserState confirmed, String email);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE UserEntity a " +
+            "SET a.profilePictureId = ?2  WHERE a.id = ?1")
+    int changeUserProfileImage(Long userId, Long mediaId);
 }
