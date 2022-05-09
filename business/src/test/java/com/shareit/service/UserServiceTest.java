@@ -1,7 +1,6 @@
 package com.shareit.service;
 
 import com.shareit.data.repository.UserRepository;
-import com.shareit.domain.dto.Media;
 import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.dto.registration.UserRegistration;
 import com.shareit.domain.dto.User;
@@ -14,7 +13,6 @@ import com.shareit.infrastructure.cryptography.Encrypter;
 import com.shareit.utils.validator.EmailValidator;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -33,6 +31,7 @@ class UserServiceTest {
     private final Encrypter encrypter;
     private final ConfirmationTokenService confirmationTokenService;
     private final MediaClient mediaClient;
+    private final AuthService authService;
 
     private final LocalDate birthDate = LocalDate.now();
     private final UserRegistration userRegistration = new UserRegistration(
@@ -64,8 +63,9 @@ class UserServiceTest {
         encrypter = Mockito.mock(Encrypter.class);
         confirmationTokenService = Mockito.mock(ConfirmationTokenService.class);
         mediaClient = Mockito.mock(MediaClient.class);
+        authService = Mockito.mock(AuthService.class);
 
-        this.userService = new UserService(userRepository, emailValidator, encrypter, mediaClient);
+        this.userService = new UserService(userRepository, emailValidator, encrypter, mediaClient, authService);
     }
 
     @Test
