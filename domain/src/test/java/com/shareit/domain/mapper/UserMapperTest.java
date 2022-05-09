@@ -1,5 +1,6 @@
 package com.shareit.domain.mapper;
 
+import com.shareit.domain.dto.Media;
 import com.shareit.domain.entity.UserEntity;
 import com.shareit.domain.dto.User;
 import com.shareit.domain.entity.UserState;
@@ -21,16 +22,18 @@ class UserMapperTest {
             "any_password",
             "any_name",
             birthDate,
-            UserState.CONFIRMED);
+            UserState.CONFIRMED,
+            null);
 
     private final User userModel = new User(1L,
             "any_name",
             birthDate,
-            true);
+            true,
+            Media.builder().build());
 
     @Test
     public void testToModel() {
-        User model = userMapper.toModel(userEntity);
+        User model = userMapper.toModel(userEntity, Media.builder().build());
         assertNotNull(model);
         assertEquals(userModel, model);
     }
