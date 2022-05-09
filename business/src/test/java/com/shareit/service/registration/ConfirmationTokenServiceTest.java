@@ -37,7 +37,8 @@ class ConfirmationTokenServiceTest {
             "HHV$%%^5478yhgvbtFv34#$b",
             "any_name",
             LocalDate.now().minusYears(10L),
-            UserState.CONFIRMED);
+            UserState.CONFIRMED,
+            1L);
     private ConfirmationTokenEntity expectedConfirmationTokenEntity = new ConfirmationTokenEntity(
             token,
             LocalDateTime.now(),

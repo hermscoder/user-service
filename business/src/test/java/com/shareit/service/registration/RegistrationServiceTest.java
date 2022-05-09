@@ -41,7 +41,8 @@ class RegistrationServiceTest {
             "HHV$%%^5478yhgvbtFv34#$b",
             "any_name",
             birthDate,
-            UserState.CONFIRMED);
+            UserState.CONFIRMED,
+            1L);
 
     private ConfirmationTokenEntity expectedConfirmationTokenEntity = new ConfirmationTokenEntity(
             token,

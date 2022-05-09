@@ -26,7 +26,7 @@ public class UserControllerTest {
     public UserControllerTest() {
         userService = Mockito.mock(UserService.class);
         userController = new UserController(userService);
-        expectedUser = new User(1L, "test", LocalDate.now(), true);
+        expectedUser = new User(1L, "test", LocalDate.now(), true, null);
     }
 
     @Test
