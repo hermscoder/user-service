@@ -1,10 +1,14 @@
 package com.shareit.presentation;
 
+import com.shareit.domain.dto.Media;
 import com.shareit.domain.dto.User;
 import com.shareit.service.UserService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 
 
 @RestController
@@ -19,6 +23,12 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") Long userId) {
         return ResponseEntity.ok(userService.getUserById(userId));
+    }
+
+    @PostMapping(value = "/profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> uploadProfilePicture(@RequestPart("file") MultipartFile file) {
+        userService.uploadProfilePicture(file);
+        return ResponseEntity.noContent().build();
     }
 
 }
