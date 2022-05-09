@@ -39,8 +39,7 @@ public class UserService {
 
         Media userMedia = mediaClient.getMediaById(1L);
 
-        User user = UserMapper.INSTANCE.toModel(userOptional.get());
-
+        User user = UserMapper.INSTANCE.toModel(userOptional.get(), userMedia);
 
         return user;
     }
@@ -54,11 +53,9 @@ public class UserService {
             throw new InvalidParameterException("passwordConfirmation");
         }
 
-        UserEntity userEntity = userRepository.save(
-                new UserEntity(userRegistration.getEmail(),
-                        encrypter.encrypt(userRegistration.getPassword()),
-                        userRegistration.getName(),
-                        userRegistration.getBirthDate()));
+        userRegistration.setPassword(encrypter.encrypt(userRegistration.getPassword()));
+        UserEntity userEntity = userRepository.save(UserMapper.INSTANCE.toEntity(userRegistration));
+
         return userEntity;
     }
 
