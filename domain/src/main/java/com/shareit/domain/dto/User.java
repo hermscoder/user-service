@@ -22,7 +22,7 @@ public class User {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate birthDate;
     private Boolean confirmed;
-//    private Media profilePicture;
+    private Media profilePicture;
 //    private List<Interest> interests;
 
 }

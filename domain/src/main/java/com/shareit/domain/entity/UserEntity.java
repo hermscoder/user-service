@@ -12,8 +12,6 @@ import java.time.LocalDate;
 @Table(name = "s_user")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
 public class UserEntity {
     @Id
     @Column(name = "user_id")
@@ -25,11 +23,15 @@ public class UserEntity {
     private LocalDate birthDate;
     @Enumerated(EnumType.STRING)
     private UserState state;
-//    private Media profilePicture;
+    private Long profilePictureId;
 //    private List<Interest> interests;
 
+    public UserEntity() {
+        this.state = UserState.CREATED;
+    }
+
     public UserEntity(String email, String password, String name, LocalDate birthDate) {
-        this(null,email, password, name, birthDate, UserState.CREATED);
+        this(null,email, password, name, birthDate, UserState.CREATED, null);
     }
 
 }
