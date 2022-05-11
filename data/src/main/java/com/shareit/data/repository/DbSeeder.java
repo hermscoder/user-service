@@ -1,6 +1,7 @@
 package com.shareit.data.repository;
 
 import com.shareit.domain.entity.UserEntity;
+import com.shareit.domain.entity.UserState;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
@@ -26,6 +27,6 @@ public class DbSeeder implements CommandLineRunner {
         if(!"create".equals(strategy)) {
             return;
         }
-        userRepository.save(new UserEntity("test@gmail.com", "password", "test", LocalDate.now()));
+        userRepository.save(new UserEntity(null, "test@gmail.com", "password", "test", LocalDate.now(), UserState.CREATED, 1L));
     }
 }
