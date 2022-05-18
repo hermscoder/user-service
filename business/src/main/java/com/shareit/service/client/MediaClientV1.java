@@ -4,15 +4,12 @@ import com.shareit.domain.dto.Media;
 import com.shareit.utils.FileConverter;
 import com.shareit.utils.commons.exception.MediaUploadException;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
