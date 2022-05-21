@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MediaClientV1Test {
 
     private MediaClient mediaClient;
-    private WebClient webClient;
+    private WebClient.Builder webClientBuilder;
 
     private final Media expectedMedia = Media.builder().id(1L).type("IMAGE").url("http://test.url.com").build();
     private final String expectedMediaStr = objectToJsonString(expectedMedia);
@@ -30,7 +30,7 @@ class MediaClientV1Test {
 
     @BeforeEach
     public void setup() {
-        this.webClient = WebClient.builder()
+        this.webClientBuilder = WebClient.builder()
                 .exchangeFunction(clientRequest -> {
                     HttpStatus httpStatus = HttpStatus.OK;
                     String body = expectedMediaStr;
@@ -49,9 +49,8 @@ class MediaClientV1Test {
                             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                             .body(body)
                             .build());
-                }
-                ).build();
-        this.mediaClient = new MediaClientV1(webClient);
+                });
+        this.mediaClient = new MediaClientV1(webClientBuilder);
     }
 
     @Test

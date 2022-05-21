@@ -18,8 +18,8 @@ public class MediaClientV1 implements MediaClient {
     private static final String MEDIA_SERVICE_URL = "http://media-service/v1/media";
     private final WebClient webClient;
 
-    public MediaClientV1(WebClient webClient) {
-        this.webClient = webClient;
+    public MediaClientV1(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.build();
     }
 
     public Media getMediaById(Long mediaId) throws MediaUploadException {
