@@ -3,13 +3,14 @@ package com.shareit.presentation;
 import com.shareit.domain.dto.registration.UserRegistration;
 import com.shareit.domain.dto.registration.UserCreated;
 import com.shareit.service.registration.RegistrationService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(path = "/v1/registration")
+@RequestMapping(path = "/v1/registration", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RegistrationController {
 
     private final RegistrationService registrationService;

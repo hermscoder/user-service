@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
-@RequestMapping("/v1/user")
+@RequestMapping(path = "/v1/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
     private UserService userService;
 
