@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class MediaClientV1 implements MediaClient {
 
-    private static final String MEDIA_SERVICE_URL = "http://localhost:8082/v1/media";
+    private static final String MEDIA_SERVICE_URL = "http://media-service/v1/media";
     private final WebClient webClient;
 
     public MediaClientV1(WebClient webClient) {
@@ -23,13 +23,17 @@ public class MediaClientV1 implements MediaClient {
     }
 
     public Media getMediaById(Long mediaId) throws MediaUploadException {
-        Media userMedia = webClient.get()
-                .uri(MEDIA_SERVICE_URL, uriBuilder -> uriBuilder.pathSegment(String.valueOf(mediaId)).build())
-                .retrieve()
-                .bodyToMono(Media.class)
-                .doOnError((error) -> new MediaUploadException("Error while fetching media", error))
-                .block();
-
+        Media userMedia = null;
+        try{
+            userMedia = webClient.get()
+                    .uri(MEDIA_SERVICE_URL, uriBuilder -> uriBuilder.pathSegment(String.valueOf(mediaId)).build())
+                    .retrieve()
+                    .bodyToMono(Media.class)
+                    .doOnError((error) -> new MediaUploadException("Error while fetching media", error))
+                    .block();
+        } catch (Exception e) {
+            throw new MediaUploadException("Error while fetching media", e);
+        }
         return userMedia;
     }
 
