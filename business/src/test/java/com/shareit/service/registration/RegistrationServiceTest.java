@@ -77,7 +77,7 @@ class RegistrationServiceTest {
         String serviceReturn = registrationService.confirmToken(token);
 
         verify(confirmationTokenService).setConfirmedAt(token);
-        verify(userService).enableAppUser(expectedConfirmationTokenEntity.getUser().getEmail());
+        verify(userService).enableAppUser(expectedConfirmationTokenEntity.getUser().getId());
         assertEquals("confirmed", serviceReturn);
     }
 

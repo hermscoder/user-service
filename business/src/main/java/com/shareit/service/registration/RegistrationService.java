@@ -36,7 +36,7 @@ public class RegistrationService {
         }
 
         confirmationTokenService.setConfirmedAt(token);
-        userService.enableAppUser(confirmationTokenEntity.getUser().getEmail());
+        userService.enableAppUser(confirmationTokenEntity.getUser().getId());
 
         return "confirmed";
     }

@@ -69,8 +69,8 @@ public class UserService {
 
 
 
-    public int enableAppUser(String email) {
-        return userRepository.changeUserState(UserState.CONFIRMED, email);
+    public int enableAppUser(Long userId) {
+        return userRepository.changeUserState(UserState.CONFIRMED, userId);
     }
 
     public void uploadProfilePicture(MultipartFile file) {
