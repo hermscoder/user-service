@@ -4,7 +4,7 @@
 ![architecture-shareit drawio](https://user-images.githubusercontent.com/19540700/234315008-f1a88482-507a-41f9-8fc3-488a934d7f04.png)
 
 
-## Bigge picture (until now)
+## Bigger picture (until now)
 ![auth-server drawio](https://user-images.githubusercontent.com/19540700/234315094-fcb42d08-54a8-4ad5-a9be-f7dee7f377b1.png)
 
 
