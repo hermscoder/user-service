@@ -1,10 +1,12 @@
 # user-service
 
 ## How I want the application to look like
-![image](https://user-images.githubusercontent.com/19540700/221129111-4b44dc98-c3ed-4ce3-8548-0e8470ad99ce.png)
+![architecture-shareit drawio](https://user-images.githubusercontent.com/19540700/234315008-f1a88482-507a-41f9-8fc3-488a934d7f04.png)
+
 
 ## Bigge picture (until now)
-![image](https://user-images.githubusercontent.com/19540700/221129426-645fef18-e19d-4d5c-8753-0d5a40e98216.png)
+![auth-server drawio](https://user-images.githubusercontent.com/19540700/234315094-fcb42d08-54a8-4ad5-a9be-f7dee7f377b1.png)
+
 
 
 ## TODO
